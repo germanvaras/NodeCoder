@@ -34,7 +34,6 @@ class ProductManager {
                 console.log("Faltan datos por completar");
             }
         }
-
     }
     getProducts() {
         return this.products;
