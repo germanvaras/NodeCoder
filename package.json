@@ -1,0 +1,26 @@
+{
+  "name": "nodecoder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node entregables/entregable3/src/app.js",
+    "dev": "nodemon entregables/entregable3/src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/germanvaras/NodeCoder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/germanvaras/NodeCoder/issues"
+  },
+  "homepage": "https://github.com/germanvaras/NodeCoder#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  }
+}
