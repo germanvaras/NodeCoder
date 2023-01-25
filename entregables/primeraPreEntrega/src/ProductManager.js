@@ -16,10 +16,15 @@ class ProductManager {
     async addProduct(product) {
         try {
             const dataParse = await this.getProducts()
-            dataParse.push({ ...product, id: await this.incrementableId() })
-            await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
+            if(product.title && product.description && product.code && product.price && product.status && product.stock && product.category ){
+                dataParse.push({id: this.incrementableId(), ...product})
+                await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
+            }
+            else{
+                return "Faltan datos por completar"
+            }
         } catch(err) {
-            return {error: err}
+            return {error:err.message}
         }
     }
     async getProducts() {
@@ -28,7 +33,7 @@ class ProductManager {
             return JSON.parse(data)
         }
         catch (err) {
-            return {error: err}
+            return {error: err.message}
         }
     }
     async getById(id) {
@@ -37,7 +42,7 @@ class ProductManager {
             return dataParse.find((item) => item.id === id) || null
         }
         catch (err) {
-            return {error: e}
+            return {error: err.message}
         }
     }
     async updateProduct(id, product) {
@@ -50,7 +55,7 @@ class ProductManager {
             await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
         }
         catch (err) {
-            return {error: e}
+            return {error: err.message}
         }
     }
     async deleteById(id) {
@@ -60,14 +65,14 @@ class ProductManager {
             await fs.promises.writeFile(this.file, JSON.stringify(filterData, null, 2))
         }
         catch (err) {
-            return {error: e}
+            return {error: err.message}
         }
     }
     async deleteAll() {
         try {
             await fs.promises.writeFile(this.file, "[]");
         } catch (err) {
-            return {error: err}
+            return {error: err.message}
         }
     }
 }

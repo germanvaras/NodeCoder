@@ -1,12 +1,17 @@
+//#region imports
 const express = require("express");
 const ProductManager = require("./ProductManager");
 require("dotenv").config();
+//#endregion
+//#region declarations
 const app = express();
-const manager = new ProductManager("entregables/products.json");
+const manager = new ProductManager("./entregables/products.json");
 const PORT = process.env.PORT || 4200;
+//#endregion
+//#region middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+//#endregion
 app.get('/', (_req, res) => {
     res.send("Bienvenido a la Página de Inicio")
 })
@@ -22,8 +27,8 @@ app.get('/products', async (req, res) => {
             res.send(limitProducts)
         }
     }
-    catch{
-        res.stutes(500).send({status:"error", error: "Error de servidor"})
+    catch(e){
+        res.status(500).send({error: e})
     }
 })
 app.get('/product/:pid', async (req, res) => {
@@ -37,8 +42,8 @@ app.get('/product/:pid', async (req, res) => {
             res.send(productId)
         }
     }
-    catch {
-        res.stutes(500).send({status:"error", error: "Error de servidor"})
+    catch(e) {
+        res.status(500).send({error: e})
     }
 
 })
