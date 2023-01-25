@@ -17,11 +17,11 @@ class ProductManager {
         try {
             const dataParse = await this.getProducts()
             if(product.title && product.description && product.code && product.price && product.status && product.stock && product.category ){
-                dataParse.push({id: this.incrementableId(), ...product})
+                dataParse.push({...product})
                 await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
             }
             else{
-                return "Faltan datos por completar"
+                console.log("Faltan datos")
             }
         } catch(err) {
             return {error:err.message}
@@ -49,7 +49,6 @@ class ProductManager {
         try {
             const dataParse = await this.getProducts()
             const position = dataParse.findIndex((productId) => productId.id === id)
-            console.log(position)
             product.id = id
             dataParse.splice(position, 1, product)
             await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))

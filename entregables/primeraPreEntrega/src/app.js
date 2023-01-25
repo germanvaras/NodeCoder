@@ -9,10 +9,11 @@ const productsRouter = require('../routes/products');
 const cartRouter = require('../routes/cart');
 //#endregion
 //#region middlewares
-app.use("/api/products", productsRouter)
-app.use("/api/cart", cartRouter)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/products", productsRouter)
+app.use("/api/cart", cartRouter)
+
 //#endregion
 
 const server = app.listen(PORT, ()=> console.log(`Server listening on port ${PORT}`))
