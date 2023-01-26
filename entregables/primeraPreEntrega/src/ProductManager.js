@@ -17,11 +17,21 @@ class ProductManager {
         try {
             const dataParse = await this.getProducts()
             if(product.title && product.description && product.code && product.price && product.status && product.stock && product.category ){
-                dataParse.push({...product})
+                const newProduct = {
+                    id: await this.incrementableId(),
+                    title: product.title,
+                    description: product.description,
+                    code: product.code,
+                    price:product.price,
+                    status: true,
+                    category: product.category,
+                    thumbnails: product.thumbnails
+                }
+                dataParse.push({...newProduct})
                 await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
             }
             else{
-                console.log("Faltan datos")
+                return "Error"
             }
         } catch(err) {
             return {error:err.message}

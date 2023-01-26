@@ -35,20 +35,13 @@ productsRouter.get('/:bid', async (req, res) => {
 })
 productsRouter.post('/add', async (req, res) => {
     try {
-        const { title, description, code, price, status, stock, category, thumbnails } = req.body
-        const newProduct = {
-            id: await manager.incrementableId(),
-            title,
-            description,
-            code,
-            price,
-            status,
-            stock,
-            category,
-            thumbnails,
+        const productAdd = await manager.addProduct(req.body);
+        if(productAdd === "Error"){
+            res.send({error: "Faltan datos por completar"})
         }
-        await manager.addProduct(newProduct);
-        res.send(`producto:${newProduct.title} agregado`)
+        else{
+            res.send(`producto:${req.body.title} agregado`)
+        } 
     }
     catch (err) {
         res.status(500).send({ error: err.message })

@@ -9,8 +9,8 @@ const productsRouter = require('../routes/products');
 const cartRouter = require('../routes/cart');
 //#endregion
 //#region middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 app.use("/api/products", productsRouter)
 app.use("/api/cart", cartRouter)
 

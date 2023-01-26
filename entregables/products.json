@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Remera Ojos",
+    "description": "Remera negra de algodón peinado",
+    "code": "A0123",
+    "price": 5000,
+    "status": true,
+    "category": "Anime",
+    "thumbnails": []
+  },
+  {
+    "id": 3,
+    "title": "Remera Nube",
+    "description": "Remera negra de algodón peinado",
+    "code": "A0123",
+    "price": 5000,
+    "status": true,
+    "category": "Anime",
+    "thumbnails": []
+  },
+  {
+    "id": 4,
+    "title": "Remera Dark",
+    "description": "Remera negra de algodón peinado",
+    "code": "A0123",
+    "price": 5000,
+    "status": true,
+    "category": "Anime",
+    "thumbnails": []
+  },
+  {
+    "id": 5,
+    "title": "Remera Pepe",
+    "description": "Remera negra de algodón peinado",
+    "code": "A0123",
+    "price": 5000,
+    "status": true,
+    "category": "Anime",
+    "thumbnails": []
+  }
+]
