@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const productsRouter = Router();
 const ProductManager = require("../src/ProductManager");
-const manager = new ProductManager("./entregables/products.json");
+const managerProduct = new ProductManager("./entregables/products.json");
 productsRouter.get('/', async (req, res) => {
     try {
         const { limit } = req.query
-        const allProduct = await manager.getProducts()
+        const allProduct = await managerProduct.getProducts()
         if (!limit) {
             res.send(allProduct)
         }
@@ -18,10 +18,10 @@ productsRouter.get('/', async (req, res) => {
         res.status(500).send({ error: err.message })
     }
 })
-productsRouter.get('/:bid', async (req, res) => {
+productsRouter.get('/:pid', async (req, res) => {
     try {
         const id = Number(req.params.bid)
-        const productId = await manager.getById(id)
+        const productId = await managerProduct.getById(id)
         if (!productId) {
             res.status(400).send({ status: "Not Found", error: "This id don't exist" })
         }
@@ -33,9 +33,9 @@ productsRouter.get('/:bid', async (req, res) => {
         res.status(500).send({ error: err.message })
     }
 })
-productsRouter.post('/add', async (req, res) => {
+productsRouter.post('/', async (req, res) => {
     try {
-        const productAdd = await manager.addProduct(req.body);
+        const productAdd = await managerProduct.addProduct(req.body);
         if(productAdd === "Error"){
             res.send({error: "Faltan datos por completar"})
         }
@@ -47,21 +47,21 @@ productsRouter.post('/add', async (req, res) => {
         res.status(500).send({ error: err.message })
     }
 })
-productsRouter.put('/:bid', async (req,res) => {
+productsRouter.put('/:pid', async (req,res) => {
     try {
         const id = Number(req.params.bid)
         const productUpdate = req.body
-        await manager.updateProduct(id, productUpdate);
+        await managerProduct.updateProduct(id, productUpdate);
         res.send(`Producto con id: ${productUpdate.id} actualizado correctamente`)
     }
     catch (err) {
         req.status(500).send({error:err.message})
     }
 })
-productsRouter.delete('/:bid', async (req, res) => {
+productsRouter.delete('/:pid', async (req, res) => {
     try {
         const id = Number(req.params.bid)
-        await manager.deleteById(id)
+        await managerProduct.deleteById(id)
         res.send(`Producto con id: ${id} eliminado correctamente`)
     }
     catch (err) {
