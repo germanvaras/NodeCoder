@@ -26,7 +26,7 @@ class CartManager {
         try {
             const data = await this.getCart()
             const dataFind = data.find((cart)=> cart.id === id)
-            return dataFind
+            return dataFind.products
         }
         catch (err) {
             return { error: err.message }
@@ -45,18 +45,18 @@ class CartManager {
     async addProductInCart(idCart, product) {
         try {
             let quantity = 1
-            const productsInCart = await this.getProductsInCart(idCart)
-            productsInCart.products.push({id:product.id, quantity: quantity})
-            fs.writeFileSync(this.file, JSON.stringify(productsInCart , "hola", 2))
-            // const productsInCart = await this.getProductsInCart(idCart)
-            // if (productsInCart.some(productId => productId !== product.id)) {
-            //     productsInCart.products.push({id:product.id, quantity: quantity})
-            //     await fs.promises.writeFile(this.file, JSON.stringify("hola" , null, 2))
-            // }
-            // else {
-            //     quantity++
-            //     await fs.promises.writeFile(this.file, JSON.stringify(productsInCart, null, 2))
-            // }
+            const data = await this.getCart()
+            const indexData = data.findIndex((cart)=> cart.id === idCart )
+            const dataProduts = data[indexData].products
+            const findProduct = dataProduts.find((existProd)=>existProd.id === product.id)
+            if(findProduct) {
+                findProduct.quantity += 1
+                fs.writeFileSync(this.file, JSON.stringify(data, null, 2))
+            }
+            else{
+                dataProduts.push({id:product.id, quantity: quantity})
+                fs.writeFileSync(this.file, JSON.stringify(data, null, 2))
+            }
         }
         catch (err) {
             return { error: err.message }
