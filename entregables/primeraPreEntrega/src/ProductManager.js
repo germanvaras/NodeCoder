@@ -49,7 +49,7 @@ class ProductManager {
     async getById(id) {
         try {
             const dataParse = await this.getProducts()
-            return dataParse.find((item) => item.id === id) || null
+            return dataParse.find((item) => item.id === id)
         }
         catch (err) {
             return {error: err.message}
@@ -70,7 +70,11 @@ class ProductManager {
     async deleteById(id) {
         try {
             const dataParse = await this.getProducts()
-            const filterData = dataParse.filter(product => product.id !== id) || null
+            const dataFind = await this.getById(id)
+            if(!dataFind){
+                return "Error"
+            }
+            const filterData = dataParse.filter(product => product.id !== id) 
             await fs.promises.writeFile(this.file, JSON.stringify(filterData, null, 2))
         }
         catch (err) {

@@ -28,5 +28,15 @@
     "status": true,
     "category": "Anime",
     "thumbnails": []
+  },
+  {
+    "id": 4,
+    "title": "Remera Marvel",
+    "description": "Remera negra de algodón peinado",
+    "code": "A0123",
+    "price": 5000,
+    "status": true,
+    "category": "Anime",
+    "thumbnails": []
   }
 ]

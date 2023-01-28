@@ -20,7 +20,7 @@ productsRouter.get('/', async (req, res) => {
 })
 productsRouter.get('/:pid', async (req, res) => {
     try {
-        const id = Number(req.params.bid)
+        const id = Number(req.params.pid)
         const productId = await managerProduct.getById(id)
         if (!productId) {
             res.status(400).send({ status: "Not Found", error: "This id don't exist" })
@@ -49,7 +49,7 @@ productsRouter.post('/', async (req, res) => {
 })
 productsRouter.put('/:pid', async (req,res) => {
     try {
-        const id = Number(req.params.bid)
+        const id = Number(req.params.pid)
         const productUpdate = req.body
         await managerProduct.updateProduct(id, productUpdate);
         res.send(`Producto con id: ${productUpdate.id} actualizado correctamente`)
@@ -60,9 +60,15 @@ productsRouter.put('/:pid', async (req,res) => {
 })
 productsRouter.delete('/:pid', async (req, res) => {
     try {
-        const id = Number(req.params.bid)
-        await managerProduct.deleteById(id)
-        res.send(`Producto con id: ${id} eliminado correctamente`)
+        const id = Number(req.params.pid)
+        const deleteById = await managerProduct.deleteById(id)
+        if(deleteById === 'Error'){
+            res.status(404).send({error:`El producto con el id: ${id} no existe`})
+        }
+        else{
+            res.send(`Producto con id: ${id} eliminado correctamente`)
+        }
+   
     }
     catch (err) {
         res.status(500).send({ error: err.message })
