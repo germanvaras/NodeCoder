@@ -1,0 +1,16 @@
+<div class="productsContainer">
+    <h1>All products</h1>
+    <div class="products">
+        {{#each products}}
+        <div class="cardContainer">
+            <img src={{this.thumbnails}} class="" alt="{{this.title}}">
+            <div class="">
+                <h3 class="">{{this.title}}</h3>
+                <p class="">{{this.description}}</p>
+                <p class="">Price: ${{this.price}}</p>
+                <a href="/detail/:pid={{this.id}}" class="">Go detail</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

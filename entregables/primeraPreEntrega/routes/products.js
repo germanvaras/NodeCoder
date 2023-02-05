@@ -67,8 +67,7 @@ productsRouter.delete('/:pid', async (req, res) => {
         }
         else{
             res.send(`Producto con id: ${id} eliminado correctamente`)
-        }
-   
+        } 
     }
     catch (err) {
         res.status(500).send({ error: err.message })
