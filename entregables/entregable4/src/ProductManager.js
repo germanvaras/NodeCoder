@@ -1,11 +1,8 @@
 const fs = require("fs")
-class ProductManager {
-    constructor(file) {
-        this.file = file
-    }
-    async incrementableId() {
+const pathFile = ('entregables/products.json');
+const incrementableId = async ()=> {
         let idMax = 0
-        const dataParse = await this.getProducts()
+        const dataParse = await getProducts()
         dataParse.forEach(product => {
             if (product.id > idMax) {
                 idMax = product.id
@@ -13,22 +10,19 @@ class ProductManager {
         });
         return idMax + 1
     }
-    async addProduct(product) {
+const addProduct = async (product) =>{
         try {
             const dataParse = await this.getProducts()
-            if(product.title && product.description && product.code && product.price && product.status && product.stock && product.category ){
+            if(product.title && product.description  && product.price && product.thumbnails ){
                 const newProduct = {
-                    id: await this.incrementableId(),
+                    id: await incrementableId(),
                     title: product.title,
                     description: product.description,
-                    code: product.code,
                     price:product.price,
-                    status: true,
-                    category: product.category,
                     thumbnails: product.thumbnails
                 }
                 dataParse.push({...newProduct})
-                await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
+                await fs.promises.writeFile(pathFile, JSON.stringify(dataParse, null, 2))
             }
             else{
                 return "Error"
@@ -37,56 +31,38 @@ class ProductManager {
             return {error:err.message}
         }
     }
-    async getProducts() {
+    const getProducts = async () => {
         try {
-            const data = await fs.promises.readFile(this.file, "utf-8")
+            const data = await fs.promises.readFile(pathFile, "utf-8")
             return JSON.parse(data)
         }
         catch (err) {
             return {error: err.message}
         }
     }
-    async getById(id) {
+    const getById = async (id) =>{
         try {
-            const dataParse = await this.getProducts()
+            const dataParse = await getProducts()
             return dataParse.find((item) => item.id === id)
         }
         catch (err) {
             return {error: err.message}
         }
     }
-    async updateProduct(id, product) {
+    
+    const  deleteById = async (id)=> {
         try {
-            const dataParse = await this.getProducts()
-            const position = dataParse.findIndex((productId) => productId.id === id)
-            product.id = id
-            dataParse.splice(position, 1, product)
-            await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
-        }
-        catch (err) {
-            return {error: err.message}
-        }
-    }
-    async deleteById(id) {
-        try {
-            const dataParse = await this.getProducts()
-            const dataFind = await this.getById(id)
+            const dataParse = await getProducts()
+            const dataFind = await getById(id)
             if(!dataFind){
                 return "Error"
             }
             const filterData = dataParse.filter(product => product.id !== id) 
-            await fs.promises.writeFile(this.file, JSON.stringify(filterData, null, 2))
+            await fs.promises.writeFile(pathFile, JSON.stringify(filterData, null, 2))
         }
         catch (err) {
             return {error: err.message}
         }
     }
-    async deleteAll() {
-        try {
-            await fs.promises.writeFile(this.file, "[]");
-        } catch (err) {
-            return {error: err.message}
-        }
-    }
-}
-module.exports = ProductManager;
+
+module.exports = {addProduct, getProducts, getById, deleteById};

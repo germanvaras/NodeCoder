@@ -1,3 +1,17 @@
-
+<div id="realTimeContainer">
+    <form>
+        <h2>Add product:</h2>
+        <input type="text" placeholder="Title" name="title" id="title" required />
+        <input type="text" placeholder="Descripcion" name="description" id="description" required maxlength="80" />
+        <input type="text" placeholder="Url image" name="img" id="img" required />
+        <input type="number" placeholder="Price" name="price" id="price" required />
+        <button class="button-submit" type="submit">Submit</button>
+    </form>
+    <div class="productsContainer">
+        <div class="products" id="realtimeproducts">
+                   
+        </div>
+    </div>
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

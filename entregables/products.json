@@ -7,7 +7,7 @@
     "price": 5000,
     "status": true,
     "category": "Anime",
-    "thumbnails": []
+    "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1660416669/remera-sharingan_bgg8kz.png"
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "price": 5000,
     "status": true,
     "category": "Anime",
-    "thumbnails": []
+    "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1659814694/remera-nube_oztikq.jpg" 
   },
   {
     "id": 3,
@@ -26,8 +26,8 @@
     "code": "A0123",
     "price": 5000,
     "status": true,
-    "category": "Anime",
-    "thumbnails": []
+    "category": "Star Wars",
+    "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1660416668/remera-dark_rkbkc7.png"
   },
   {
     "id": 4,
@@ -37,6 +37,6 @@
     "price": 5000,
     "status": true,
     "category": "Anime",
-    "thumbnails": []
+    "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1660431147/remera-groot_hfbpbs.png"
   }
 ]
