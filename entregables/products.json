@@ -17,7 +17,7 @@
     "price": 5000,
     "status": true,
     "category": "Anime",
-    "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1659814694/remera-nube_oztikq.jpg" 
+    "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1659814694/remera-nube_oztikq.jpg"
   },
   {
     "id": 3,
@@ -28,15 +28,5 @@
     "status": true,
     "category": "Star Wars",
     "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1660416668/remera-dark_rkbkc7.png"
-  },
-  {
-    "id": 4,
-    "title": "Remera Marvel",
-    "description": "Remera negra de algodón peinado",
-    "code": "A0123",
-    "price": 5000,
-    "status": true,
-    "category": "Anime",
-    "thumbnails": "https://res.cloudinary.com/dveku4pvl/image/upload/v1660431147/remera-groot_hfbpbs.png"
   }
 ]
