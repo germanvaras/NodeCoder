@@ -6,12 +6,12 @@ productsRealTime.get('/', (req,res)=>{
 })
 
 productsRealTime.post("/", async (req, res) => {
-    require("./../src/app").emitProducts(req.body);
+    require("../app").emitProducts(req.body);
     res.end();
   });
   
 productsRealTime.delete("/:id", async (req, res) => {
-    require("./../src/app").emitDeleteProduct(req.params.id);
+    require("../app").emitDeleteProduct(req.params.id);
     res.end();
   });
 module.exports = productsRealTime

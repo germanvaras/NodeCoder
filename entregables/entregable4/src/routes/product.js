@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const productRouter = Router();
-const {getById} = require('../src/productManager')
+const {getById} = require('../productManager')
 productRouter.get("/:pid", async (req, res) => {
     const id = Number(req.params.pid)
     const product = await getById(id)
