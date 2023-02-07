@@ -25,7 +25,7 @@ server.use('/api/product', productRouter)
 server.use('/api/products', productsRealTime)
 
 server.get('/', async (req, res) => {
-    res.render('home', { products, title:"Home", style: 'index.css'})
+    res.render('home', { products, title:"Home", style: 'index.css',PORT})
 })
 
 const httpServer = server.listen(PORT, () => console.log(`Server listening on port ${httpServer.address().port}`))

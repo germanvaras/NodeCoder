@@ -2,7 +2,7 @@ const { Router } = require('express');
 const productsRealTime = Router();
 
 productsRealTime.get('/', (req,res)=>{
-    res.render('realtimeProducts')
+    res.render('realtimeProducts',{title:'Detail',style:"index.css"})
 })
 
 productsRealTime.post("/", async (req, res) => {

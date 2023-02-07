@@ -3,14 +3,16 @@
     <div class="products">
         {{#each products}}
         <div class="cardContainer">
-            <img src={{this.thumbnails}} class="" alt="{{this.title}}">
-            <div class="">
-                <h3 class="">{{this.title}}</h3>
-                <p class="">{{this.description}}</p>
-                <p class="">Price: ${{this.price}}</p>
-                <a href="/api/product/{{this.id}}" class="">Go detail</a>
-            </div>
+            <div class=<h3 class="cardTitle">{{this.title}}</h3>
+                <p class="cardDescription">{{this.description}}</p>
+                <p class="cardPrice">Price: ${{this.price}}</p>
+                <a href="/api/product/{{this.id}}" class=""><button class="cardButton">Go detail</button></a>
+            </div>"cardInformation">
         </div>
         {{/each}}
+    </div>
+    <div class="buttonContainer">
+        <a href="http://localhost:{{PORT}}/api/products"><button class="linkButton">Go to Real TIme
+                Products</button></a>
     </div>
 </div>

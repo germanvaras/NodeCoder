@@ -12,11 +12,13 @@ const addProducts = () => {
         const card = document.createElement('div');
         card.className = "productContainer"
         card.innerHTML = `
-            <img src="${product.thumbnails}" alt="${product.name}">
-            <h3>${product.title}</h3>
-            <p>${product.description}</p>
-            <p> Precio: $${product.price}</p>
-            <button onclick="deleteProduct(${product.id})" class="iconTrash">Eliminar</button>`;
+        <img src="${product.thumbnails}" alt="${product.name}" class="cardImg">
+        <div class="cardInfo">
+        <h3 class="cardTitle">${product.title} </h3>
+        <p class="cardDescription">${product.description}</p>
+        <p class="cardPrice"> Precio: $${product.price}</p>
+        <button class="cardButton" onclick="deleteProduct(${product.id})" class="iconTrash">Eliminar</button>;
+        </div>`
         return card
     })
     productsContainer.innerHTML = '';
