@@ -10,14 +10,15 @@ socket.on("all products", async (res) => {
 const addProducts = () => {
     const cards = products.map(product => {
         const card = document.createElement('div');
-        card.className = "productContainer"
+        card.className = "cardContainer"
         card.innerHTML = `
+   
         <img src="${product.thumbnails}" alt="${product.name}" class="cardImg">
-        <div class="cardInfo">
-        <h3 class="cardTitle">${product.title} </h3>
-        <p class="cardDescription">${product.description}</p>
-        <p class="cardPrice"> Precio: $${product.price}</p>
-        <button class="cardButton" onclick="deleteProduct(${product.id})" class="iconTrash">Eliminar</button>;
+        <div class="cardInformation">
+            <h3 class="cardTitle">${product.title} </h3>
+            <p class="cardDescription">${product.description}</p>
+            <p class="cardPrice"> Precio: $${product.price}</p>
+            <button class="cardButton" onclick="deleteProduct(${product.id})" class="iconTrash">Eliminar</button>
         </div>`
         return card
     })
