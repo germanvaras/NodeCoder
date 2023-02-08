@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const productsRealTime = Router();
-
+const {PORT} = require("../app")
 productsRealTime.get('/', (req,res)=>{
-    res.render('realtimeProducts',{title:'Detail',style:"index.css"})
+    res.render('realtimeProducts',{title:'Real Time Products',style:"index.css", PORT})
 })
 
 productsRealTime.post("/", async (req, res) => {
