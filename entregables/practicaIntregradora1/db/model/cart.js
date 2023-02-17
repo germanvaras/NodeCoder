@@ -1,9 +1,14 @@
-// const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 
-// const cartSchema = mongoose.Schema({
-//     name: { type: String, required: true, max: 100},
-//     lastname: { type: String, required: true, max: 100},
-//     email: { type: String, required: true, max: 100},
-//     password: { type: String, required: true, max: 100}
-// })
-// module.exports = cartSchema
+const cartSchema = mongoose.Schema({
+    products: {
+        type: [{
+            quantity: { type: Number, default: 1, requirded: true },
+        }],
+        default: []
+    }
+}, 
+{
+    versionKey: false,
+})
+module.exports = cartSchema

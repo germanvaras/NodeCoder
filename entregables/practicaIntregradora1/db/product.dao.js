@@ -8,7 +8,7 @@ mongoose.connect(conection, error => {
         process.exit()
     }
 })
-class mongoDbContainer {
+class mongoDbProductContainer {
     constructor(collection, schema) {
         this.productCollection = mongoose.model(collection, schema)
     }
@@ -92,4 +92,4 @@ class mongoDbContainer {
     }
 }
 
-module.exports = mongoDbContainer;
+module.exports = mongoDbProductContainer;

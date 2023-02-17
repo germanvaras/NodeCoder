@@ -1,6 +1,6 @@
-const mongoDbContainer = require('../../db/product.dao')
+const mongoDbProductContainer = require('../../db/product.dao')
 const productSchema = require('../../db/model/product.js')
-const productDAO = new mongoDbContainer('products', productSchema)
+const productDAO = new mongoDbProductContainer('products', productSchema)
 
 const serviceGetProducts = async () => {
     let getProducts = await productDAO.getProducts()

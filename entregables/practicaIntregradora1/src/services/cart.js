@@ -1,60 +1,24 @@
-// const  incrementableId = async () => {
-//     let idMax = 0
-//     const dataParse = await this.getCart()
-//     dataParse.forEach(cart => {
-//         if (cart.id > idMax) {
-//             idMax = cart.id
-//         }
-//     });
-//     return idMax + 1
-// }
-// const getCart = async()=> {
-//     try {
-//         const data = await fs.promises.readFile(this.file, "utf-8")
-//         return JSON.parse(data)
-//     }
-//     catch (err) {
-//         return { error: err.message }
-//     }
-// }
-// const getProductsInCart = async(id) => {
-//     try {
-//         const data = await this.getCart()
-//         const dataFind = data.find((cart)=> cart.id === id)
-//         return dataFind.products
-//     }
-//     catch (err) {
-//         return { error: err.message }
-//     }
-// }
-// const createCart = async () => {
-//     try {
-//         const dataParse = await this.getCart()
-//         dataParse.push({ id: await this.incrementableId(), products: [] })
-//         await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
-//     }
-//     catch (err) {
-//         return { error: err.message }
-//     }
-// }
-// const  addProductInCart = async (idCart, product) => {
-//     try {
-//         let quantity = 1
-//         const data = await this.getCart()
-//         const indexData = data.findIndex((cart)=> cart.id === idCart )
-//         const dataProduts = data[indexData].products
-//         const findProduct = dataProduts.find((existProd)=>existProd.id === product.id)
-//         if(findProduct) {
-//             findProduct.quantity += 1
-//             fs.writeFileSync(this.file, JSON.stringify(data, null, 2))
-//         }
-//         else{
-//             dataProduts.push({id:product.id, quantity: quantity})
-//             fs.writeFileSync(this.file, JSON.stringify(data, null, 2))
-//         }
-//     }
-//     catch (err) {
-//         return { error: err.message }
-//     }
-// }
-// module.exports = {getCart, addProductInCart, addProduct, addProductInCart}    
+const mongoDbCartContainer = require('../../db/cart.dao.js')
+const mongoProductContainer = require('../../db/product.dao.js')
+const cartSchema = require('../../db/model/cart.js')
+const productSchema = require('../../db/model/product.js')
+const cartDAO = new mongoDbCartContainer('cart', cartSchema)
+const productDAO = new mongoProductContainer('product',productSchema)
+
+const serviceAddCart = async () => {
+    let addCart = await cartDAO.createCart()
+    return addCart;
+}
+const serviceGetProductsInCart = async (id) => {
+    let getProducts = await cartDAO.getProductsInCart(id)
+    return getProducts;
+}
+const serviceAddCartProduct = async (id, product)=>{
+    let cartId = await cartDAO.getCartById(id)
+    let productId = await productDAO.getById(product)
+    let addCartProduct = await cartDAO.addProductInCart(cartId, productId)
+    return addCartProduct
+
+
+}
+module.exports = {serviceAddCart, serviceGetProductsInCart,serviceAddCartProduct}
