@@ -1,38 +1,16 @@
-const mongoose = require ('mongoose');
-require("dotenv").config();
+const mongoose = require('mongoose');
+require("dotenv").config;
 const conection = process.env.db
-mongoose.connect( conection, error => {
-    if(error){
+
+mongoose.connect(conection, error => {
+    if (error) {
         console.log('Cannot connect to db')
         process.exit()
     }
 })
 class mongoDbContainer {
-
-    constructor(collection, schema){
+    constructor(collection, schema) {
         this.productCollection = mongoose.model(collection, schema)
-    }
-    async addProduct(product) {
-        try {
-            if (product.title && product.description && product.code && product.price && product.status && product.stock && product.category) {
-                const newProduct = {
-                    title: product.title,
-                    description: product.description,
-                    code: product.code,
-                    price: product.price,
-                    status: true,
-                    category: product.category,
-                    thumbnails: product.thumbnails
-                }
-                this.productCollection.create({ ...newProduct })
-                return newProduct;
-            }
-            else {
-                return "Error"
-            }
-        } catch (err) {
-            return { error: err.message }
-        }
     }
     async getProducts() {
         try {
@@ -45,31 +23,70 @@ class mongoDbContainer {
     }
     async getById(id) {
         try {
-            const productId = await this.productCollection.findOne({ id: id })
-            return productId
+            const product = await this.productCollection.find({ _id: id })
+            if (product.length === 0) {
+                return { error: `No existe un producto con el id: ${id}` }
+            }
+            return product
         }
         catch (err) {
+            if (err.name === 'CastError') {
+                return { error: `Id inválido: ${id}` }
+            }
             return { error: err.message }
         }
     }
-    // async updateProduct(id, product) {
-    //     try {
-    //         const dataParse = await this.getProducts()
-    //         const position = dataParse.findIndex((productId) => productId.id === id)
-    //         product.id = id
-    //         dataParse.splice(position, 1, product)
-    //         await fs.promises.writeFile(this.file, JSON.stringify(dataParse, null, 2))
-    //     }
-    //     catch (err) {
-    //         return { error: err.message }
-    //     }
-    // }
+    async addProduct(product) {
+        try {
+            const newProduct = new this.productCollection(product)
+            const validationError = newProduct.validateSync()
+            if (validationError) {
+                const errorMessages = []
+                for (let errorField in validationError.errors) {
+                    const errorMessage = validationError.errors[errorField].message
+                    errorMessages.push(errorMessage)
+                }
+                return { error: errorMessages }
+            }
+            const createdProduct = await newProduct.save()
+            return createdProduct
+        } catch (err) {
+            return { error: err.message }
+        }
+    }
+    async updateProduct(id, product) {
+        try {
+            const updatedProduct = await this.productCollection.findOneAndUpdate(
+                { _id: id },
+                product,
+                { new: true }
+            )
+
+            if (!updatedProduct) {
+                return { error: `No existe producto con id: ${id}` }
+            }
+            return { Modificado: `El producto con el id: ${id} ha sido modificado correctamente` }
+        } catch (err) {
+            if (err.name === 'CastError') {
+                return { error: `Id inválido: ${id}` }
+            }
+            return { error: err.message }
+        }
+    }
     async deleteById(id) {
         try {
-            const deleteProduct = await this.productCollection.deleteOne({ id: id })
-            return `Product with id ${deleteProduct.id}`
+            const deleteProduct = await this.productCollection.deleteOne({ _id: id })
+            if (deleteProduct.deletedCount === 0) {
+                return { error: `No existe producto con id:${id}` }
+            }
+
+            const deletedProduct = { Eliminado: `El producto con el id: ${id} ha sido elimnado correctamente` }
+            return deletedProduct
         }
         catch (err) {
+            if (err.name === 'CastError') {
+                return { error: `Id inválido: ${id}` }
+            }
             return { error: err.message }
         }
     }

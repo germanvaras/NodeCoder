@@ -2,14 +2,15 @@ const express = require ("express");
 const app = express();
 require("dotenv").config();
 const path = require("path");
+const handlebars = require('express-handlebars');
 
 const PORT = process.env.PORT || 4200;
 const productsRouter = require ('./routes/product');
 // const cartRouter = require('./routes/cart.js');
 
-server.engine('handlebars', handlebars.engine())
-server.set('views', path.join(__dirname, "/../views"))
-server.set('view engine', 'handlebars');
+app.engine('handlebars', handlebars.engine())
+app.set('views', path.join(__dirname, "/../views"))
+app.set('view engine', 'handlebars');
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))

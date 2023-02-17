@@ -2,30 +2,39 @@ const {
     serviceAddProduct,
     serviceGetProducts,
     serviceGetById,
+    serviceUpdateProduct,
     serviceDeleteById
 } = require('../services/product.js')
-
-const addProduct = async (req, res) => {
-    let productAdded = await serviceAddProduct(req.body)
-    res.send('Product added successfully')
-}
 const getProducts = async (req, res) => {
     const { limit } = req.query
-    let response = await serviceGetProducts();
+    let responseProducts = await serviceGetProducts();
     if (!limit) {
-        res.send(response);
+        res.send(responseProducts);
     }
     else {
-        const limitProducts = response.slice(0, limit)
+        const limitProducts = responseProducts.slice(0, limit)
         res.send(limitProducts)
     }
 }
-const getById = async (req, res) => {
-    let response = await serviceGetById(req.params.id)
-    res.send(response);
+const getProductById = async (req, res) => {
+    const id = req.params.pid
+    let responseProduct = await serviceGetById(id)
+    res.send(responseProduct);
+}
+
+const addProduct = async (req, res) => {
+    const productAdded = await serviceAddProduct(req.body)
+    res.send(productAdded)
+}
+
+const updateProductById = async (req, res) => {
+    const id = req.params.pid
+    let updateProduct = await serviceUpdateProduct(id, req.body)
+    res.send(updateProduct)
 }
 const deleteById = async (req, res) => {
-    let productRemoved = await serviceDeleteById(req.params.id);
-    res.send('Product removed successfully');
+    const id = req.params.pid
+    const deletedProduct = await serviceDeleteById(id);
+    res.send(deletedProduct);
 }
-module.exports = { addProduct, getProducts, getById, deleteById};
+module.exports = { addProduct, getProducts,getProductById, updateProductById, deleteById};
