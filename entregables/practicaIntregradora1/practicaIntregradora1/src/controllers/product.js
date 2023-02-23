@@ -7,19 +7,31 @@ const {
 } = require('../services/product.js')
 const getProducts = async (req, res) => {
     const { limit } = req.query
-    let responseProducts = await serviceGetProducts();
+
+    let products = await serviceGetProducts();
     if (!limit) {
-        res.send(responseProducts);
+        res.render('homeProducts', {
+            style: "index.css",
+            title: "Home",
+            products
+        });
     }
     else {
-        const limitProducts = responseProducts.slice(0, limit)
-        res.send(limitProducts)
+        let products = products.slice(0, limit)
+        res.render('homeProducts', {
+            style: "index.css",
+            title: "Home",
+            products
+        });
     }
 }
 const getProductById = async (req, res) => {
     const id = req.params.pid
-    let responseProduct = await serviceGetById(id)
-    res.send(responseProduct);
+    let product = await serviceGetById(id)
+    res.render("detailProduct", 
+    {style: "index.css",
+    title: "Home", 
+    product});
 }
 
 const addProduct = async (req, res) => {
@@ -37,4 +49,4 @@ const deleteById = async (req, res) => {
     const deletedProduct = await serviceDeleteById(id);
     res.send(deletedProduct);
 }
-module.exports = { addProduct, getProducts,getProductById, updateProductById, deleteById};
+module.exports = { addProduct, getProducts, getProductById, updateProductById, deleteById };

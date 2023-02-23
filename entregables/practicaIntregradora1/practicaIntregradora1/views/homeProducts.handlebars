@@ -1,0 +1,34 @@
+<div class="productsContainer">
+    <h1>All products</h1>
+    <div class="products" id="products">
+        {{#each products}}
+        <div class="cardContainer">
+            <div class="cardInformation">
+                <img class="cardImg" src={{this.thumbnail}} alt={{this.title}}>
+                <h3 class="cardTitle">{{this.title}}</h3>
+                <p class="cardDescription">{{this.description}}</p>
+                <p class="cardPrice">Price: ${{this.price}}</p>
+                <a href="/api/products/{{this._id}}" class=""><button class="cardButton">Go detail</button></a>
+                <button class="cardButton" onclick="deleteProduct('{{this._id}}')" class="iconTrash">Eliminar</button>
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<div id="realTimeContainer">
+    <form class="formContainer" id="formProduct">
+        <h2 class="formTitle">Add product:</h2>
+        <input type="text" placeholder="Title" name="title" class="formInput" id="title" required />
+        <input type="text" placeholder="Descripcion" name="description" class="formInput" id="description" required
+            maxlength="80" />
+        <input type="text" placeholder="Code" name="code" class="formInput" id="code" required maxlength="8" />
+        <input type="text" placeholder="Category" name="Category" class="formInput" id="category" required
+            maxlength="20" />
+        <input type="text" placeholder="Url image" name="img" class="formInput" id="img" required />
+        <input type="number" placeholder="Price" name="price" class="formInput" id="price" required />
+        <input type="number" placeholder="Stock" name="stock" class="formInput" id="stock" required />
+        <button class="buttonForm" type="submit">Submit</button>
+    </form>
+</div>
+<script src="/js/index.js"></script>

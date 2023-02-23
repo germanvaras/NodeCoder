@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require("dotenv").config;
 const conection = process.env.db
 
-mongoose.connect(conection, error => {
+mongoose.connect("mongodb+srv://gervaras97:JeW3nEpRCFwTxb2H@eccomerce.vfx9q1x.mongodb.net/?retryWrites=true&w=majority", error => {
     if (error) {
         console.log('Cannot connect to db')
         process.exit()
@@ -14,7 +14,7 @@ class mongoDbProductContainer {
     }
     async getProducts() {
         try {
-            const allProducts = await this.productCollection.find()
+            const allProducts = await this.productCollection.find().lean()
             return allProducts
         }
         catch (err) {
@@ -23,8 +23,8 @@ class mongoDbProductContainer {
     }
     async getById(id) {
         try {
-            const product = await this.productCollection.find({ _id: id })
-            if (product.length === 0) {
+            const product = await this.productCollection.findOne({ _id: id }).lean()
+            if (!product) {
                 return { error: `No existe un producto con el id: ${id}` }
             }
             return product

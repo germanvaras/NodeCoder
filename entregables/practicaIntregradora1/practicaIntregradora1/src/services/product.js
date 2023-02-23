@@ -15,7 +15,7 @@ const serviceAddProduct = async (product) => {
     return addProduct;
 }
 const serviceUpdateProduct = async (id, product) => {
-    let serviceAddProduct = await productDAO.updateProduct(id, product)
+    let serviceAddProduct = await productDAO.updateProduct(id, product, quentity)
     return serviceAddProduct;
 }
 const serviceDeleteById = async (id) => {
