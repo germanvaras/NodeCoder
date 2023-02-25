@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 require("dotenv").config;
 const conection = process.env.db
-
-mongoose.connect("mongodb+srv://gervaras97:JeW3nEpRCFwTxb2H@eccomerce.vfx9q1x.mongodb.net/?retryWrites=true&w=majority", error => {
+mongoose.connect(conection, error => {
     if (error) {
         console.log('Cannot connect to db')
         process.exit()

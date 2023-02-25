@@ -5,7 +5,7 @@ const mongoDbProductContainer = require('./product.dao')
 const productSchema = require('./model/product')
 const productDAO = new mongoDbProductContainer('products', productSchema)
 
-mongoose.connect("mongodb+srv://gervaras97:JeW3nEpRCFwTxb2H@eccomerce.vfx9q1x.mongodb.net/?retryWrites=true&w=majority", error => {
+mongoose.connect(conection, error => {
     if (error) {
         console.log('Cannot connect to db')
         process.exit()
@@ -38,11 +38,10 @@ class mongoDbCartContainer {
             if (!cartId) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            const products = cartId.products
+            const products = cartId.products[0]
             return products
         }
-        catch (err) {
-          
+        catch (err) {     
             if (err.name === 'CastError') {
                 return { error: `Id inválido: ${id}` }
             }
@@ -68,16 +67,18 @@ class mongoDbCartContainer {
             }
             const productDetails = await productDAO.getById({_id: productId});
 
-            if (!productDetails) {
+            if (!productDetails._id) {
                 return { error: `No existe un producto con id: ${productId}` };
             }
-        
-            const productIndex = cart.products.findIndex(p => p.product === productId);
+            cart.products.forEach(element => {
+                console.log(String(element._id))
+                console.log(productId)
+            });
+            const productIndex = cart.products.findIndex(p => String(p._id) === productId);
             if (productIndex >= 0) {
                 cart.products[productIndex].quantity += 1
             } else {
-                cart.products.push(productId);
-
+                cart.products.push(productDetails);
             }
             const updatedCart = await cart.save();
             return updatedCart.products;

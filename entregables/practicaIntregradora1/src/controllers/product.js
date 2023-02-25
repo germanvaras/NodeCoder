@@ -7,7 +7,6 @@ const {
 } = require('../services/product.js')
 const getProducts = async (req, res) => {
     const { limit } = req.query
-
     let products = await serviceGetProducts();
     if (!limit) {
         res.render('homeProducts', {
