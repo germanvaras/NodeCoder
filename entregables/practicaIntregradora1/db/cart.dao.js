@@ -33,12 +33,10 @@ class mongoDbCartContainer {
     async getProductsInCart(id) {
         try {
             const cartId = await this.cartCollection.findOne({ _id: id }).populate("products.product")
-            console.log(cartId)
-
             if (!cartId) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            const products = cartId.products[0]
+            const products = cartId.products
             return products
         }
         catch (err) {     
@@ -70,15 +68,11 @@ class mongoDbCartContainer {
             if (!productDetails._id) {
                 return { error: `No existe un producto con id: ${productId}` };
             }
-            cart.products.forEach(element => {
-                console.log(String(element._id))
-                console.log(productId)
-            });
             const productIndex = cart.products.findIndex(p => String(p._id) === productId);
             if (productIndex >= 0) {
                 cart.products[productIndex].quantity += 1
             } else {
-                cart.products.push(productDetails);
+                cart.products.push({product:productDetails._id});
             }
             const updatedCart = await cart.save();
             return updatedCart.products;

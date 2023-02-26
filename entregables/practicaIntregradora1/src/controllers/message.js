@@ -1,19 +1,18 @@
 const {
     getMessagesServices,
     addMessageServices,
-  } = require("../services/message");
-  
-  const getMessages = async () => {
-      const messages = await getMessagesServices();
-      return messages;
+} = require("../services/message");
 
-  };
-  
-  const addMessages = async (message) => {
+const getMessages = async () => {
+    const messages = await getMessagesServices();
+    return messages;
+};
 
-      const result = await addMessageServices(message);
-      return result;
-  };
-  
-  module.exports = { getMessages, addMessages };
-  
+const addMessages = async (message) => {
+
+    const result = await addMessageServices(message);
+    return result;
+};
+
+module.exports = { getMessages, addMessages };
+
