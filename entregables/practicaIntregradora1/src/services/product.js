@@ -1,5 +1,5 @@
-const mongoDbProductContainer = require('../../db/product.dao')
-const productSchema = require('../../db/model/product.js')
+const mongoDbProductContainer = require('../db/product.dao')
+const productSchema = require('../db/model/product.js')
 const productDAO = new mongoDbProductContainer('products', productSchema)
 
 const serviceGetProducts = async () => {
@@ -15,7 +15,7 @@ const serviceAddProduct = async (product) => {
     return addProduct;
 }
 const serviceUpdateProduct = async (id, product) => {
-    let serviceAddProduct = await productDAO.updateProduct(id, product, quentity)
+    let serviceAddProduct = await productDAO.updateProduct(id, product)
     return serviceAddProduct;
 }
 const serviceDeleteById = async (id) => {
