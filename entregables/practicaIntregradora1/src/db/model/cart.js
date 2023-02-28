@@ -8,8 +8,5 @@ const cartSchema = mongoose.Schema({
         quantity: { type: Number, default: 1 }
     }]
 });
-cartSchema.pre("find", function(){
-    this.populate("products.product")
-    })
 
 module.exports = cartSchema

@@ -90,11 +90,13 @@ class mongoDbCartContainer {
             if (!productDetails._id) {
                 return { error: `No existe un producto con id: ${productId}` };
             }
-            const productIndex = cart.products.findIndex(p => String(p._id) === productId);
+            const productIndex = cart.products.findIndex(p => String(p.product) === productId);
             if (productIndex >= 0) {
                 cart.products[productIndex].quantity += 1
             } else {
-                cart.products.push(productDetails._id);
+                const newProduct = { product: productId}
+                // el id que genera automaticamente es del objeto nuevo que se crea ? 
+                cart.products.push(newProduct);
             }
             const updatedCart = await cart.save();
             return updatedCart.products;
