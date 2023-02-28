@@ -117,7 +117,7 @@ class mongoDbCartContainer {
             if (!productDetails._id) {
                 return { error: `No existe un producto con id: ${productId}` };
             }
-            const productIndex = cart.products.findIndex(p => String(p._id) === productId);
+            const productIndex = cart.products.findIndex(p => String(p.product) === productId);
             console.log(productIndex)
             cart.products.splice(productIndex, 1);
             const updatedCart = await cart.save();
