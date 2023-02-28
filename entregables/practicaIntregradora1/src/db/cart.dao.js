@@ -15,16 +15,16 @@ class mongoDbCartContainer {
     constructor(collection, schema) {
         this.cartCollection = mongoose.model(collection, schema)
     }
-    async getCarts(){
-        try{
+    async getCarts() {
+        try {
             const carts = await this.cartCollection.find()
-            return carts 
+            return carts
         }
         catch (err) {
             return { error: err.message }
         }
     }
-    async getCartById(id){
+    async getCartById(id) {
         try {
             const cartId = await this.cartCollection.findOne({ _id: id })
             if (!cartId) {
@@ -41,14 +41,20 @@ class mongoDbCartContainer {
     }
     async getProductsInCart(id) {
         try {
-            const cartId = await this.cartCollection.findOne({ _id: id }).populate("products.product")
+            const cartId = await this.cartCollection.findOne({ _id: id })
+                .populate("products.product", {
+                    _id:0,
+                    description:0,
+                    code:0, 
+                    status: 0
+                })
             if (!cartId) {
                 return { error: `No existe un cart con id: ${id}` }
             }
             const products = cartId.products
             return products
         }
-        catch (err) {     
+        catch (err) {
             if (err.name === 'CastError') {
                 return { error: `Id inválido: ${id}` }
             }
@@ -64,13 +70,13 @@ class mongoDbCartContainer {
             return { error: err.message }
         }
     }
-    async deletCartById(id){
+    async deletCartById(id) {
         try {
             const cartId = await this.cartCollection.findOneAndRemove({ _id: id })
             if (!cartId) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            return {eliminado: `El cart con el id: ${id} ha sido eliminado correctamente`}
+            return { eliminado: `El cart con el id: ${id} ha sido eliminado correctamente` }
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -81,12 +87,12 @@ class mongoDbCartContainer {
     }
     async addProductInCart(id, productId) {
         try {
-            
+
             const cart = await this.cartCollection.findOne({ _id: id });
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` };
             }
-            const productDetails = await productDAO.getById({_id: productId});
+            const productDetails = await productDAO.getById({ _id: productId });
             if (!productDetails._id) {
                 return { error: `No existe un producto con id: ${productId}` };
             }
@@ -94,25 +100,25 @@ class mongoDbCartContainer {
             if (productIndex >= 0) {
                 cart.products[productIndex].quantity += 1
             } else {
-                const newProduct = { product: productId}
+                const newProduct = { product: productId }
                 // el id que genera automaticamente es del objeto nuevo que se crea ? 
                 cart.products.push(newProduct);
             }
             const updatedCart = await cart.save();
             return updatedCart.products;
-            
+
         } catch (err) {
             return { error: err.message };
         }
     }
     async deleteProductInCart(id, productId) {
         try {
-            
+
             const cart = await this.cartCollection.findOne({ _id: id });
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` };
             }
-            const productDetails = await productDAO.getById({_id: productId});
+            const productDetails = await productDAO.getById({ _id: productId });
             console.log(productDetails)
             if (!productDetails._id) {
                 return { error: `No existe un producto con id: ${productId}` };
@@ -122,12 +128,12 @@ class mongoDbCartContainer {
             cart.products.splice(productIndex, 1);
             const updatedCart = await cart.save();
             return updatedCart.products;
-            
+
         } catch (err) {
             return { error: err.message };
         }
     }
-    
+
 
 }
 
