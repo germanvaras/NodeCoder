@@ -41,9 +41,8 @@ class mongoDbCartContainer {
     }
     async getProductsInCart(id) {
         try {
-            const cartId = await this.cartCollection.findOne({ _id: id })
+            const cartId = await this.cartCollection.findOne({ _id: id }).lean()
                 .populate("products.product", {
-                    _id:0,
                     description:0,
                     code:0, 
                     status: 0
@@ -101,6 +100,7 @@ class mongoDbCartContainer {
                 cart.products[productIndex].quantity += 1
             } else {
                 const newProduct = { product: productId }
+                // el id que genera automaticamente es del objeto nuevo que se crea ? 
                 cart.products.push(newProduct);
             }
             const updatedCart = await cart.save();
