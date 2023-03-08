@@ -22,4 +22,4 @@ const serviceDeleteById = async (id) => {
     let deleteById = await productDAO.deleteById(id)
     return deleteById;
 }
-module.exports = {serviceAddProduct, serviceGetProducts, serviceGetById,serviceUpdateProduct, serviceDeleteById}
+module.exports = {serviceAddProduct, serviceGetProducts,serviceGetById, serviceUpdateProduct, serviceDeleteById}

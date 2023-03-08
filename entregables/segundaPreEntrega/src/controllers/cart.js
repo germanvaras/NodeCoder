@@ -2,11 +2,12 @@ const {
     serviceAddCart,
     serviceGetProductsInCart,
     serviceAddCartProduct,
-    serviceDeleteCart,
+    serviceDeleteProductsInCart,
     serviceGetCarts,
-    serviceDeleteCartProduct
+    serviceDeleteCartProduct,
+    updateQuantityProductService
 } = require('../services/cart')
-const getCarts = async(req, res) =>{
+const getCarts = async (req, res) => {
     const carts = await serviceGetCarts()
     res.send(carts)
 }
@@ -19,18 +20,22 @@ const getProductsInCart = async (req, res) => {
     productsInCart.forEach(element => {
         console.log(element.product.title)
     });
-    res.render("cart", {style:"index.css", title: "Cart", productsInCart} )
+    res.render("cart", { style: "index.css", title: "Cart", productsInCart })
 }
-const deleteCart = async (req, res) => {
-    const cartRemoved = await serviceDeleteCart(req.params.cid)
-    res.send(cartRemoved)
+const deleteProductsInCart = async (req, res) => {
+    const cartEmpty = await serviceDeleteProductsInCart(req.params.cid)
+    res.send(cartEmpty)
 }
-const addProductInCart = async(req,res) => {
-    const addProduct = await serviceAddCartProduct(req.params.cid, req.params.pid)
+const addProductInCart = async (req, res) => {
+    const addProduct = await serviceAddCartProduct(req.params)
     res.send(addProduct)
 }
-const deleteProductInCart = async(req,res) => {
-    const deleteProduct = await serviceDeleteCartProduct(req.params.cid, req.params.pid)
+const deleteProductInCart = async (req, res) => {
+    const deleteProduct = await serviceDeleteCartProduct(req.params)
     res.send(deleteProduct)
 }
-module.exports = {getCarts,createCart,getProductsInCart,deleteCart,addProductInCart, deleteProductInCart}
+const updateQuantityProduct = async (req, res) => {
+    const result = await updateQuantityProductService(req.params, req.body);
+    res.send(result);
+};
+module.exports = { getCarts, createCart, getProductsInCart, deleteProductsInCart, addProductInCart, deleteProductInCart, updateQuantityProduct }

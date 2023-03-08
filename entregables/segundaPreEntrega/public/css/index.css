@@ -49,8 +49,21 @@ h1 {
     font-size: 4rem;
     text-align: center;
 }
-
-/* home y products */
+.nav{
+    background-color: var(--black);
+    padding: 2rem;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 1.5rem;
+}
+.iconCart {
+    width: 3rem;
+    transition: transform .3s;
+}
+.iconCart:hover{
+    transform: scale(1.1);
+}
+/*home y products */
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(35rem, 23%));
@@ -180,7 +193,7 @@ h1 {
     text-align: center;
 }
 
-.buttonForm {
+.buttonForm,.buttonBlack {
     background-color: var(--white);
     font-size: 2rem;
     padding: 1.5rem;
@@ -191,13 +204,19 @@ h1 {
     margin-top: 2rem;
     font-weight: 600;
     transition: background-color .3s;
-
 }
-
-.buttonForm:hover {
+.buttonBlack{
+    margin-top: 0;
+    background-color: var(--black);
+    color: var(--white);
+    transition: color .3s;
+}
+.buttonForm:hover{
     background-color: var(--main-color);
 }
-
+.buttonBlack:hover{
+   color: var(--main-color);
+}
 /* detail */
 p {
     color: #ffffff;
@@ -308,28 +327,54 @@ svg {
 }
 
 /* cart */
-table {
+.productsInCart{
     padding: 2rem;
-    border-collapse: separate;
-    border-spacing: 0 10px;
 }
-
+table {
+    border-collapse: separate;
+    border-spacing: .2rem .5rem;
+    text-align: center;
+}
+.pruductContainer{
+    margin-bottom: 2rem;
+}
 tr {
     background-color: var(--black);
     box-shadow: 7px 5px 14px -6px #000000;
 }
-td {
+td,th {
     padding: 2rem;
  
 }
-td:first-child{
+td:first-child, th:first-child{
     border-radius: .6rem 0 0 .6rem;
 }
-td:last-child{
+td:last-child, th:last-child{
     border-radius: 0 .6rem .6rem 0;
 }
 .cartProductImg {
     width: 150px;
     border-radius: .6rem;
 }
-
+.emptyTitle{
+    text-align: center;
+}
+.buttonCartContainer{
+    display: flex;
+    justify-content: start;
+    margin-bottom: 2rem;
+}
+.emptyCartContainer {
+    height: 80vh;
+    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.containerQuantity{
+    height: 100%;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}

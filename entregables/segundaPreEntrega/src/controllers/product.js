@@ -6,31 +6,24 @@ const {
     serviceDeleteById
 } = require('../services/product.js')
 const getProducts = async (req, res) => {
-    const { limit } = req.query
     let products = await serviceGetProducts();
-    if (!limit) {
-        res.render('homeProducts', {
-            style: "index.css",
-            title: "Home",
-            products
-        });
-    }
-    else {
-        let products = products.slice(0, limit)
-        res.render('homeProducts', {
-            style: "index.css",
-            title: "Home",
-            products
-        });
-    }
+    res.render('homeProducts', {
+        style: "index.css",
+        title: "Home",
+        products
+    });
+
 }
+
 const getProductById = async (req, res) => {
     const id = req.params.pid
     let product = await serviceGetById(id)
-    res.render("detailProduct", 
-    {style: "index.css",
-    title: "Home", 
-    product});
+    res.render("detailProduct",
+        {
+            style: "index.css",
+            title: "Detail",
+            product
+        });
 }
 
 const addProduct = async (req, res) => {

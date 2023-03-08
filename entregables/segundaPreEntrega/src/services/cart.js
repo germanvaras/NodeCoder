@@ -13,16 +13,22 @@ const serviceGetProductsInCart = async (id) => {
     let getProducts = await cartDAO.getProductsInCart(id)
     return getProducts;
 }
-const serviceDeleteCart = async (id) => {
-    let deleteProduct = await cartDAO.deletCartById(id)
+const serviceDeleteProductsInCart = async (id) => {
+    let deleteProduct = await cartDAO.deleteProductsInCart(id)
     return deleteProduct;
 }
-const serviceAddCartProduct = async (id, product)=>{
-    let addCartProduct = await cartDAO.addProductInCart(id, product)
+const serviceAddCartProduct = async ({ cid, pid })=>{
+    let addCartProduct = await cartDAO.addProductInCart( cid, pid )
     return addCartProduct
 }
-const serviceDeleteCartProduct = async (id, product)=>{
-    let deleteCartProduct = await cartDAO.deleteProductInCart(id, product)
+const serviceDeleteCartProduct = async ({ cid, pid })=>{
+    let deleteCartProduct = await cartDAO.deleteProductInCart( cid, pid )
     return deleteCartProduct
 }
-module.exports = {serviceGetCarts, serviceAddCart, serviceGetProductsInCart, serviceDeleteCart, serviceAddCartProduct, serviceDeleteCartProduct}
+const updateQuantityProductService = async ( {cid, pid}, {quantity}) => {
+    const result = await cartDAO.updateQuantityProduct(cid, pid, quantity);
+    return result;
+  };
+module.exports = {serviceGetCarts, serviceAddCart, serviceGetProductsInCart, 
+    serviceDeleteProductsInCart, serviceAddCartProduct, 
+    serviceDeleteCartProduct, updateQuantityProductService}

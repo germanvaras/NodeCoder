@@ -12,9 +12,10 @@ class mongoDbProductContainer {
         this.productCollection = mongoose.model(collection, schema)
     }
     async getProducts() {
+        
         try {
-            const allProducts = await this.productCollection.find().lean()
-            return allProducts
+            const products = await this.productCollection.find().lean()
+            return products
         }
         catch (err) {
             return { error: err.message }

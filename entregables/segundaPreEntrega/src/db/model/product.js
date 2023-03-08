@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require("mongoose-paginate-v2");
 const productSchema = mongoose.Schema({
     title: { type: String, required: [true, "El campo title es requerido"] },
     description: { type: String, required: [true, "El campo description es requerido"] },
@@ -12,4 +13,5 @@ const productSchema = mongoose.Schema({
     {
         versionKey: false,
     })
+productSchema.plugin(mongoosePaginate);
 module.exports = productSchema

@@ -4,15 +4,17 @@ const {
     getCarts,
     createCart, 
     getProductsInCart, 
-    deleteCart,
+    deleteProductsInCart,
     addProductInCart,
-    deleteProductInCart
+    deleteProductInCart,
+    updateQuantityProduct
 } = require('../controllers/cart')
 cartRouter.get('/', getCarts)
 cartRouter.post('/', createCart)
 cartRouter.get('/:cid', getProductsInCart)
-cartRouter.delete('/:cid', deleteCart)
+cartRouter.delete('/:cid', deleteProductsInCart)
 cartRouter.post('/:cid/product/:pid', addProductInCart)
 cartRouter.delete('/:cid/product/:pid', deleteProductInCart)
+cartRouter.put("/:cid/product/:pid", updateQuantityProduct);
 
 module.exports = cartRouter

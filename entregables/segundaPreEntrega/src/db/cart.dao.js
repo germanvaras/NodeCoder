@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 require("dotenv").config();
 const conection = process.env.db
-const mongoDbProductContainer = require('./product.dao')
-const productSchema = require('./model/product')
-const productDAO = new mongoDbProductContainer('products', productSchema)
 
 mongoose.connect(conection, error => {
     if (error) {
@@ -17,7 +14,7 @@ class mongoDbCartContainer {
     }
     async getCarts() {
         try {
-            const carts = await this.cartCollection.find()
+            const carts = await this.cartCollection.find().lean()
             return carts
         }
         catch (err) {
@@ -43,8 +40,8 @@ class mongoDbCartContainer {
         try {
             const cartId = await this.cartCollection.findOne({ _id: id }).lean()
                 .populate("products.product", {
-                    description:0,
-                    code:0, 
+                    description: 0,
+                    code: 0,
                     status: 0
                 })
             if (!cartId) {
@@ -69,13 +66,17 @@ class mongoDbCartContainer {
             return { error: err.message }
         }
     }
-    async deletCartById(id) {
+    async deleteProductsInCart(id) {
         try {
-            const cartId = await this.cartCollection.findOneAndRemove({ _id: id })
+            const cartId = await this.cartCollection.findOne({ _id: id })
+
             if (!cartId) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            return { eliminado: `El cart con el id: ${id} ha sido eliminado correctamente` }
+
+            await this.cartCollection.updateOne({ _id: id }, { $set: { products: [] } })
+
+            return { eliminado: `Los productos del carrito con id: ${id} han sido eliminados correctamente` }
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -91,16 +92,11 @@ class mongoDbCartContainer {
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` };
             }
-            const productDetails = await productDAO.getById({ _id: productId });
-            if (!productDetails._id) {
-                return { error: `No existe un producto con id: ${productId}` };
-            }
             const productIndex = cart.products.findIndex(p => String(p.product) === productId);
             if (productIndex >= 0) {
                 cart.products[productIndex].quantity += 1
             } else {
                 const newProduct = { product: productId }
-                // el id que genera automaticamente es del objeto nuevo que se crea ? 
                 cart.products.push(newProduct);
             }
             const updatedCart = await cart.save();
@@ -117,13 +113,10 @@ class mongoDbCartContainer {
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` };
             }
-            const productDetails = await productDAO.getById({ _id: productId });
-            console.log(productDetails)
-            if (!productDetails._id) {
-                return { error: `No existe un producto con id: ${productId}` };
-            }
             const productIndex = cart.products.findIndex(p => String(p.product) === productId);
-            console.log(productIndex)
+            if (productIndex < 0) {
+                return { error: `El producto con id: ${pid} no se encontró en el carrito` };
+            }
             cart.products.splice(productIndex, 1);
             const updatedCart = await cart.save();
             return updatedCart.products;
@@ -132,8 +125,30 @@ class mongoDbCartContainer {
             return { error: err.message };
         }
     }
+    async updateQuantityProduct(cid, pid, quantity) {
+        try {
+            const cart = await this.cartCollection.findOne({ _id: cid });
+            if (!cart) {
+                return { error: `No existe un carrito con id: ${cid}` };
+            }
 
+            const productIndex = cart.products.findIndex(p => String(p.product) === pid);
 
+            if (productIndex < 0) {
+                return { error: `El producto con id: ${pid} no se encontró en el carrito` };
+            }
+
+            if (quantity === 0) {
+                cart.products.splice(productIndex, 1);
+            } else {
+                cart.products[productIndex].quantity = quantity;
+            }
+            const updatedCart = await cart.save();
+            return updatedCart.products;
+        } catch (err) {
+            return { error: err.message };
+        }
+    }
 }
 
 module.exports = mongoDbCartContainer;

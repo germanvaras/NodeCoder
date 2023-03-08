@@ -7,8 +7,9 @@
             <h2 class='detailTitle'>{{product.title}}</h2>
             <p class='detailDescription'>{{product.description}}</p>
             <p class='detailPrice'>${{product.price}}</p>
-            <button class="buttonForm">Add to Cart</button>
+            <button class="buttonForm" onclick="addProductInCart('{{product._id}}')">Add to Cart</button>
             <a class="linkForm" href="http://localhost:4200/api/products">Volver a Home</a>
         </div>
     </div>
 </section>
+<script src="/js/addToCart.js"></script>
