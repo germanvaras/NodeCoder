@@ -6,15 +6,17 @@ const {
     serviceDeleteById
 } = require('../services/product.js')
 const getProducts = async (req, res) => {
-    let products = await serviceGetProducts();
-    res.render('homeProducts', {
-        style: "index.css",
-        title: "Home",
-        products
-    });
+    const { limit, page, sort, query } = req.query
+    let queryOptions = { limit, page, sort, query }
+    try {
+        const products = await serviceGetProducts(queryOptions);
+        res.send({ status: "success", products })
 
+    }
+    catch (err) {
+        res.status(500).send(err.message);
+    }
 }
-
 const getProductById = async (req, res) => {
     const id = req.params.pid
     let product = await serviceGetById(id)
