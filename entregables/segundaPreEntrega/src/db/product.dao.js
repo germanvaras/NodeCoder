@@ -16,7 +16,7 @@ class mongoDbProductContainer {
         try {
             if (options) {
                 const products = await this.productCollection.paginate(
-                    query ? { category: query } : {}, { limit: params.limit || 10, page: params.page || 1, lean: true });
+                    query ? { category: query } : {}, { limit: options.limit || 10, page: options.page || 1, lean: true });
                 if (sort === "asc") {
                     const sortProductsAsc = await this.productCollection.aggregate([
                         {
