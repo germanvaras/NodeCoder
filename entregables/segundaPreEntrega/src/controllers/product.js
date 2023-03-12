@@ -10,7 +10,8 @@ const getProducts = async (req, res) => {
         const products = await serviceGetProducts(req.query);
         const hasNextPage = products.hasNextPage
         const hasPrevPage = products.hasPrevPage
-        console.log(hasNextPage)
+        const sort = products.sort
+        console.log(sort)
         const page = products.page
         res.render("homeProducts",{title:"Home",style:"index.css", products, hasPrevPage,  hasNextPage, page})
 

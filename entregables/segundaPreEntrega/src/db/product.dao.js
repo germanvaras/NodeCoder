@@ -14,7 +14,7 @@ class mongoDbProductContainer {
     async getProducts({query, limit, page, sort}) {
         const setLimit = limit ? limit : 10
         const setPage = page ? page : 1
-        const setSort = sort ? sort : {}
+        const setSort = sort ? { price: sort } : {}
         const setQuery = query ? {category: query } : {}
         const options ={
             limit: setLimit,
