@@ -1,7 +1,7 @@
 <div class="productsContainer">
     <h1>All products</h1>
     <div class="products" id="products">
-        {{#each products}}
+        {{#each products.docs}}
         <div class="cardContainer">
             <div class="cardInformation">
                 <img class="cardImg" src={{this.thumbnail}} alt={{this.title}}>
@@ -9,12 +9,29 @@
                 <p class="cardDescription">{{this.description}}</p>
                 <p class="cardPrice">Price: ${{this.price}}</p>
                 <a href="/api/products/{{this._id}}" class=""><button class="cardButton">Go detail</button></a>
-                {{!-- <button class="cardButton" onclick="deleteProduct('{{this._id}}')" class="iconTrash">Eliminar</button> --}}
-
+                {{!-- <button class="cardButton" onclick="deleteProduct('{{this._id}}')"
+                    class="iconTrash">Eliminar</button> --}}
             </div>
         </div>
         {{/each}}
     </div>
+</div>
+<div class="paginationContainer">
+    {{#if hasPrevPage}}
+    <button class="buttonBlack" onclick="prevPage('{{page}}')">
+        <a href="{{moveUrl}}" class="pageLink">Página Anterior</a>
+    </button>
+    {{else}}
+    <button class="buttonDisabled">Página Anterior</button>
+    {{/if}}
+    <h3>{{page}}</h3>
+    {{#if hasNextPage}}
+    <button class="buttonBlack" onclick="nextPage('{{page}}')">
+        <a href="javascript:void(0)" class="pageLink">Página Siguiente</a>
+    </button>
+    {{else}}
+    <button class="buttonDisabled">Página Siguiente</button>
+    {{/if}}
 </div>
 <div id="realTimeContainer">
     <form class="formContainer" id="formProduct">

@@ -2,8 +2,8 @@ const mongoDbProductContainer = require('../db/product.dao')
 const productSchema = require('../db/model/product.js')
 const productDAO = new mongoDbProductContainer('products', productSchema)
 
-const serviceGetProducts = async (products) =>{
-    let getProducts = await productDAO.getProducts(products)
+const serviceGetProducts = async (filters) =>{
+    let getProducts = await productDAO.getProducts(filters)
     return getProducts
 }
 const serviceGetById = async (id) => {

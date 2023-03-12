@@ -193,7 +193,7 @@ h1 {
     text-align: center;
 }
 
-.buttonForm,.buttonBlack {
+.buttonForm,.buttonBlack,.buttonDisabled {
     background-color: var(--white);
     font-size: 2rem;
     padding: 1.5rem;
@@ -204,6 +204,13 @@ h1 {
     margin-top: 2rem;
     font-weight: 600;
     transition: background-color .3s;
+}
+.buttonDisabled{
+    margin-top: 0;
+    background-color:#474747;
+    cursor:not-allowed;
+    color:#a3a3a3;
+    transition: color .3s;
 }
 .buttonBlack{
     margin-top: 0;
@@ -344,7 +351,6 @@ tr {
 }
 td,th {
     padding: 2rem;
- 
 }
 td:first-child, th:first-child{
     border-radius: .6rem 0 0 .6rem;
@@ -377,4 +383,10 @@ td:last-child, th:last-child{
     display: flex;
     gap: 1rem;
     align-items: center;
+}
+.paginationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:1rem
 }

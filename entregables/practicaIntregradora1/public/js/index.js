@@ -1,6 +1,5 @@
 const productsContainer = document.getElementById('products')
 const form = document.getElementById("formProduct");
-
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     submitForm();
@@ -24,16 +23,16 @@ const submitForm = async () => {
         body: JSON.stringify({
             title: title,
             description: description,
-            code:code, 
+            code: code,
             price: price,
-            stock:stock,
-            category:category,
+            stock: stock,
+            category: category,
             thumbnail: img,
 
         }),
     });
     location.reload();
-   
+
 };
 const deleteProduct = async (id) => {
     await fetch(`${window.location.href}/${id}`, {
@@ -46,3 +45,7 @@ const deleteProduct = async (id) => {
     });
     location.reload();
 };
+const nextPage = async (page) => {
+    let nextPage = page++
+    moveUrl(nextPage)
+}

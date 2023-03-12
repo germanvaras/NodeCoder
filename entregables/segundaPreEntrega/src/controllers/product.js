@@ -6,11 +6,13 @@ const {
     serviceDeleteById
 } = require('../services/product.js')
 const getProducts = async (req, res) => {
-    const { limit, page, sort, query } = req.query
-    let queryOptions = { limit, page, sort, query }
     try {
-        const products = await serviceGetProducts(queryOptions);
-        res.send({ status: "success", products })
+        const products = await serviceGetProducts(req.query);
+        const hasNextPage = products.hasNextPage
+        const hasPrevPage = products.hasPrevPage
+        console.log(hasNextPage)
+        const page = products.page
+        res.render("homeProducts",{title:"Home",style:"index.css", products, hasPrevPage,  hasNextPage, page})
 
     }
     catch (err) {

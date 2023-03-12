@@ -11,30 +11,21 @@ class mongoDbProductContainer {
     constructor(collection, schema) {
         this.productCollection = mongoose.model(collection, schema)
     }
-    async getProducts(options) {
-        const { query, sort } = options
+    async getProducts({query, limit, page, sort}) {
+        const setLimit = limit ? limit : 10
+        const setPage = page ? page : 1
+        const setSort = sort ? sort : {}
+        const setQuery = query ? {category: query } : {}
+        const options ={
+            limit: setLimit,
+            page: setPage,
+            sort: setSort,
+            lean: true
+        }
         try {
-            if (options) {
-                const products = await this.productCollection.paginate(
-                    query ? { category: query } : {}, { limit: options.limit || 10, page: options.page || 1, lean: true });
-                if (sort === "asc") {
-                    const sortProductsAsc = await this.productCollection.aggregate([
-                        {
-                            $sort: { price: 1 }
-                        }
-                    ])
-                    return sortProductsAsc
-                }
-                if (sort === 'desc') {
-                    const sortProductsDesc = await this.productCollection.aggregate([
-                        {
-                            $sort: { price: -1 }
-                        }
-                    ])
-                    return sortProductsDesc
-                }
-                return products;
-            }
+            const products = await this.productCollection.paginate(setQuery, options)
+            return products;
+
         }
         catch (err) {
             return { error: err.message }

@@ -69,13 +69,10 @@ class mongoDbCartContainer {
     async deleteProductsInCart(id) {
         try {
             const cartId = await this.cartCollection.findOne({ _id: id })
-
             if (!cartId) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-
             await this.cartCollection.updateOne({ _id: id }, { $set: { products: [] } })
-
             return { eliminado: `Los productos del carrito con id: ${id} han sido eliminados correctamente` }
         }
         catch (err) {

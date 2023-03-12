@@ -1,6 +1,7 @@
 const productsContainer = document.getElementById('products')
 const form = document.getElementById("formProduct");
-
+let url = window.location.href;
+const pageLink = document.querySelector('.pageLink');
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     submitForm();
@@ -24,10 +25,10 @@ const submitForm = async () => {
         body: JSON.stringify({
             title: title,
             description: description,
-            code:code, 
+            code: code,
             price: price,
-            stock:stock,
-            category:category,
+            stock: stock,
+            category: category,
             thumbnail: img,
 
         }),
@@ -46,3 +47,35 @@ const deleteProduct = async (id) => {
     });
     location.reload();
 };
+
+const nextPage = (page) => {
+    let nextPage = Number(page) + 1
+    let newUrl = moveUrl({ page: nextPage })
+    window.location.href = newUrl;
+}
+const prevPage = (page) => {
+    let prevPage = Number(page) - 1
+    let newUrl = moveUrl({ page: prevPage })
+    window.location.href = newUrl;
+}
+
+const moveUrl = (filters) => {
+    let url = window.location.href;
+    let filterExist = url.includes("?")
+    let query = ''
+    let newFilters = {};
+    if (filterExist) {
+        query = url.split("?")[1];
+        const params = new URLSearchParams(query);
+        for (const [key, value] of params) {
+            newFilters[key] = value;
+        }
+    }
+    for (const [key, value] of Object.entries(filters)) {
+        newFilters[key] = value;
+    }
+    const params = new URLSearchParams(newFilters);
+    
+    const newUrl = url.split("?")[0] + "?" + params.toString();
+    return newUrl; 
+}
