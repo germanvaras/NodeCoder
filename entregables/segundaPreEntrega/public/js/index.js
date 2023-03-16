@@ -1,53 +1,18 @@
-const productsContainer = document.getElementById('products')
-const form = document.getElementById("formProduct");
-let url = window.location.href;
-const pageLink = document.querySelector('.pageLink');
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    submitForm();
-});
-const submitForm = async () => {
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const code = document.getElementById("code").value;
-    const category = document.getElementById("category").value;
-    const price = document.getElementById("price").value;
-    const stock = document.getElementById("stock").value;
-    const img = document.getElementById("img").value;
 
-    await fetch(`${window.location.href}`, {
-        method: "post",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            title: title,
-            description: description,
-            code: code,
-            price: price,
-            stock: stock,
-            category: category,
-            thumbnail: img,
-
-        }),
-    });
-    location.reload();
-
-};
-const deleteProduct = async (id) => {
-    await fetch(`${window.location.href}/${id}`, {
-        method: "delete",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    location.reload();
-};
-
+const addQuery = (query) =>{
+    let newUrl = moveUrl({query})
+    window.location.href = newUrl
+}
+const sortAsc = (sort) =>{
+    sort = "asc"
+    let newUrl = moveUrl({ sort})
+    window.location.href = newUrl;
+}
+const sortDes = (sort) =>{
+    sort = "desc"
+    let newUrl = moveUrl({ sort})
+    window.location.href = newUrl;
+}
 const nextPage = (page) => {
     let nextPage = Number(page) + 1
     let newUrl = moveUrl({ page: nextPage })
@@ -79,3 +44,7 @@ const moveUrl = (filters) => {
     const newUrl = url.split("?")[0] + "?" + params.toString();
     return newUrl; 
 }
+removeFilters = () => {
+    let newUrl = `${window.location.protocol}//${window.location.host}/api/products`;
+    window.location.href = newUrl;
+} 

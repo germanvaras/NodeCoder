@@ -11,9 +11,13 @@ const getProducts = async (req, res) => {
         const hasNextPage = products.hasNextPage
         const hasPrevPage = products.hasPrevPage
         const sort = products.sort
-        console.log(sort)
         const page = products.page
-        res.render("homeProducts",{title:"Home",style:"index.css", products, hasPrevPage,  hasNextPage, page})
+        const query = products.query
+        const allCategories = products.docs.map(element => element.category); 
+        const categories = allCategories.filter((element, index, self) => self.indexOf(element) === index);  
+        res.render("homeProducts",{title:"Home",style:"index.css", products, 
+        hasPrevPage,hasNextPage,
+        page, sort, query, categories});
 
     }
     catch (err) {
@@ -46,4 +50,7 @@ const deleteById = async (req, res) => {
     const deletedProduct = await serviceDeleteById(id);
     res.send(deletedProduct);
 }
-module.exports = { addProduct, getProducts, getProductById, updateProductById, deleteById };
+const formCreate = async(req, res) =>{
+    res.render("formCreate", {style:"index.css", title:"Form Create"})
+}
+module.exports = { addProduct, getProducts, getProductById, updateProductById, deleteById, formCreate };

@@ -24,7 +24,7 @@ class mongoDbProductContainer {
         }
         try {
             const products = await this.productCollection.paginate(setQuery, options)
-            return products;
+            return {...products, query, sort};
 
         }
         catch (err) {
