@@ -59,9 +59,8 @@ class mongoDbCartContainer {
     }
     async createCart() {
         try {
-            const cart = new this.cartCollection()
-            const cartAdded = cart.save()
-            return cartAdded
+            const cart = await this.cartCollection.create({});
+            return cart;
         } catch (err) {
             return { error: err.message }
         }
@@ -137,7 +136,7 @@ class mongoDbCartContainer {
 
             if (quantity === 0) {
                 cart.products.splice(productIndex, 1);
-                
+
             } else {
                 cart.products[productIndex].quantity = quantity;
             }
