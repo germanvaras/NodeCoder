@@ -14,8 +14,8 @@ const getCarts = async (req, res) => {
 const createCart = async (req, res) => {
     try {
         const cartAdded = await serviceAddCart();
-        // res.cookie("cartId", cartAdded._id).send(cartAdded._id);
-        res.status(201).send(result);
+        res.cookie("cartId", cartAdded._id).send(cartAdded._id);
+        res.status(201).send(cartAdded);
     } catch (error) {
         res.status(400).send({ status: "error", payload: error.message });
     }
@@ -23,9 +23,6 @@ const createCart = async (req, res) => {
 
 const getProductsInCart = async (req, res) => {
     const productsInCart = await serviceGetProductsInCart(req.params.cid)
-    productsInCart.forEach(element => {
-        console.log(element.product.title)
-    });
     res.render("cart", { style: "index.css", title: "Cart", productsInCart })
 }
 const deleteProductsInCart = async (req, res) => {

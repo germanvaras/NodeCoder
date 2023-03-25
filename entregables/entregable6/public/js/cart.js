@@ -1,3 +1,16 @@
+const addProductInCart = async (cid,pid) => {
+  const baseUrl = `${window.location.protocol}//${window.location.host}/api/`;
+  const endpoint = `cart/${cid}/product/${pid}`;
+  const url = `${baseUrl}${endpoint}`;
+  await fetch(url, {
+      method: "post",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  });
+};
 const deleteProductInCart = async (pid) => {
   await fetch(`${window.location.href}/product/${pid}`, {
     method: "delete",
@@ -22,7 +35,7 @@ const deleteProductsInCart = async () => {
   }).then((response) => response.json())
     .then(() => {
       window.location.reload()
-    });
+});
 
 };
 const minusQuantity = (pid) => {
