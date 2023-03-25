@@ -6,6 +6,7 @@ const handlebars = require('express-handlebars');
 const { Server } = require('socket.io')
 const MongoStore = require('connect-mongo');
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const initPassport = require("./config/passport");
 const passport = require("passport");
 initPassport();
@@ -30,7 +31,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-
+app.use(cookieParser("sublimeTienda"));
 app.engine('handlebars', handlebars.engine())
 app.set('views', path.join(__dirname, "/../views"))
 app.set('view engine', 'handlebars');

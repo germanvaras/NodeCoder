@@ -22,7 +22,6 @@ userRouter.get(
     passport.authenticate("github", { failureRedirect: "api/login" }),
     async function (req, res) {
         req.session.user = req.user;
-        console.log("route", req.session.user)
         res.redirect("/api/products");
     }
 );

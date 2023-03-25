@@ -9,10 +9,10 @@ class UserDAO {
             .lean();
         return user;
     }
-    async createUser(user) {
+    async createUser(user, cid) {
         const newUser = await this.userCollection.create({
             ...user,
-            // cartId: cid
+            cartId: cid
         });
         return newUser;
     }

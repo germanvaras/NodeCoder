@@ -3,9 +3,8 @@ const userSchema = require('../db/model/user.js')
 const userDAO = new mongoDbUserContainer('user', userSchema)
 const { serviceAddCart } = require("./cart")
 const createUserService = async (user) => {
-    // const newCart = await serviceAddCart();
-    const newUser = await userDAO.createUser(user
-        //  newCart._id
+    const newCart = await serviceAddCart();
+    const newUser = await userDAO.createUser(user, newCart._id
     );
     return newUser;
 };

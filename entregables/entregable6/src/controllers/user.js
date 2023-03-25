@@ -13,7 +13,7 @@ const loginUser = async (req, res) => {
         const validPassword = isValidPassword(user, req.body.password);
 
         if (validPassword) {
-            req.session.user = user.username;
+            req.session.user = user;
             res.send({ status: "success", payload: "login success" });
         } else {
             res.send({ status: "error", payload: "login error" });
@@ -30,7 +30,6 @@ const formRegisterUser = (req, res) => {
 const createUser = async (req, res,) => {
     try {
         await createUserService(req.body);
-        // res.cookie("cartId", newUser.cartId);
         res.status(201)
             .send({ status: "success", payload: "Usuario creado correctamente" });
     } catch (error) {

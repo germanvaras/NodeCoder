@@ -17,9 +17,9 @@ const userSchema = mongoose.Schema({
         type: String,
         default: "user",
     },
-    // cartId: {
-    //     type: String,
-    // },
+    cartId: {
+        type: String,
+    },
 })
 userSchema.pre("save", function (next) {
     const user = this;
