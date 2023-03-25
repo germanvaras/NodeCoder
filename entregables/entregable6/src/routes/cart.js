@@ -2,7 +2,7 @@ const { Router } = require('express');
 const cartRouter = Router();
 const isLogged = require('../middlewares/isLogged')
 const {
-    getCarts,
+    getQuantityInCart,
     createCart, 
     getProductsInCart, 
     deleteProductsInCart,
@@ -10,7 +10,7 @@ const {
     deleteProductInCart,
     updateQuantityProduct
 } = require('../controllers/cart')
-cartRouter.get('/',isLogged, getCarts)
+cartRouter.get('/quantity/:cid',isLogged, getQuantityInCart)
 cartRouter.post('/',isLogged, createCart)
 cartRouter.get('/:cid',isLogged, getProductsInCart)
 cartRouter.delete('/:cid',isLogged, deleteProductsInCart)

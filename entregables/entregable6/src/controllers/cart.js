@@ -3,13 +3,15 @@ const {
     serviceGetProductsInCart,
     serviceAddCartProduct,
     serviceDeleteProductsInCart,
-    serviceGetCarts,
+    serviceQuantityInCart,
     serviceDeleteCartProduct,
     updateQuantityProductService
 } = require('../services/cart')
-const getCarts = async (req, res) => {
-    const carts = await serviceGetCarts()
-    res.send(carts)
+const { getUserByUsername } = require("../services/user");
+const getQuantityInCart = async (req, res) => {
+    const productsInCart = await serviceQuantityInCart(req.params.cid)
+    res.send(productsInCart)
+   
 }
 const createCart = async (req, res) => {
     try {
@@ -21,8 +23,10 @@ const createCart = async (req, res) => {
 };
 
 const getProductsInCart = async (req, res) => {
+
     const productsInCart = await serviceGetProductsInCart(req.params.cid)
-    res.render("cart", { style: "index.css", title: "Cart", productsInCart })
+    let user = await getUserByUsername(req.session?.user?.username);
+    res.render("cart", { style: "index.css", title: "Cart", productsInCart, user})
 }
 const deleteProductsInCart = async (req, res) => {
     const cartEmpty = await serviceDeleteProductsInCart(req.params.cid)
@@ -40,4 +44,4 @@ const updateQuantityProduct = async (req, res) => {
     const result = await updateQuantityProductService(req.params, req.body);
     res.send(result);
 };
-module.exports = { getCarts, createCart, getProductsInCart, deleteProductsInCart, addProductInCart, deleteProductInCart, updateQuantityProduct }
+module.exports = { getQuantityInCart, createCart, getProductsInCart, deleteProductsInCart, addProductInCart, deleteProductInCart, updateQuantityProduct }

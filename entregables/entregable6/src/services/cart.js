@@ -1,8 +1,8 @@
 const mongoDbCartContainer = require('../db/cart.dao.js')
 const cartSchema = require('../db/model/cart.js')
 const cartDAO = new mongoDbCartContainer('cart', cartSchema)
-const serviceGetCarts = async () => {
-    let carts = await cartDAO.getCarts()
+const serviceQuantityInCart = async (id) => {
+    let carts = await cartDAO.getQuantityInCart(id)
     return carts;
 }
 const serviceAddCart = async () => {
@@ -29,6 +29,6 @@ const updateQuantityProductService = async ( {cid, pid}, {quantity}) => {
     const result = await cartDAO.updateQuantityProduct(cid, pid, quantity);
     return result;
   };
-module.exports = {serviceGetCarts, serviceAddCart, serviceGetProductsInCart, 
+module.exports = {serviceQuantityInCart, serviceAddCart, serviceGetProductsInCart, 
     serviceDeleteProductsInCart, serviceAddCartProduct, 
     serviceDeleteCartProduct, updateQuantityProductService}

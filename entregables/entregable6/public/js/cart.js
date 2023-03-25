@@ -10,6 +10,7 @@ const addProductInCart = async (cid,pid) => {
           "Content-Type": "application/json",
       },
   });
+  getCart()
 };
 const deleteProductInCart = async (pid) => {
   await fetch(`${window.location.href}/product/${pid}`, {
@@ -38,18 +39,21 @@ const deleteProductsInCart = async () => {
 });
 
 };
-const minusQuantity = (pid) => {
+const minusQuantity = async (pid) => {
   const row = document.querySelector(`.product${pid}`);
   let quantity = row.querySelector(".quantity");
   if (Number(quantity.innerHTML) !== 0) {
     quantity.innerHTML = Number(quantity.innerHTML) - 1;
+    await getQuantityInCart() + 1
+   
     setQuantity(pid);
   }
 };
-const plusQuantity = (pid) => {
+const plusQuantity = async (pid) => {
   const row = document.querySelector(`.product${pid}`);
   let quantity = row.querySelector(".quantity");
   quantity.innerHTML = Number(quantity.innerHTML) + 1;
+  await getQuantityInCart() + 1
   setQuantity(pid);
 };
 
@@ -58,11 +62,11 @@ const setQuantity = async (pid) => {
   let quantity = row.querySelector(".quantity").innerHTML;
 
   await fetch(`${window.location.href}/product/${pid}`, {
-
     method: "put",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ quantity: Number(quantity) }),
   })
+  await getCart()
 };

@@ -12,10 +12,10 @@ class mongoDbCartContainer {
     constructor(collection, schema) {
         this.cartCollection = mongoose.model(collection, schema)
     }
-    async getCarts() {
+    async getQuantityInCart(id) {
         try {
-            const carts = await this.cartCollection.find().lean()
-            return carts
+            const carts = await this.cartCollection.findOne({ _id: id })
+            return carts.products
         }
         catch (err) {
             return { error: err.message }
