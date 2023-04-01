@@ -3,12 +3,6 @@ class UserDAO {
     constructor(collection, schema) {
         this.userCollection = mongoose.model(collection, schema);
     }
-    async getUserByUsername(username) {
-        const user = await this.userCollection
-            .findOne({ username: username })
-            .lean();
-        return user;
-    }
     async getUserByEmail(email) {
         const user = await this.userCollection
             .findOne({ email: email})
@@ -23,7 +17,7 @@ class UserDAO {
         return newUser;
     }
     async findUser(user) {
-        let existUser = await this.userCollection.findOne({ username: user.username });
+        let existUser = await this.userCollection.findOne({ email: user.email });
         if (!existUser) return { status:"error", payload: "Usuario inexistente" };
         return existUser;
     }

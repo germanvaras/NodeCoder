@@ -1,4 +1,5 @@
 const form = document.getElementById("formLogin");
+
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     submitForm();
@@ -17,7 +18,24 @@ const submitForm = async () => {
             username: user ,
             password: password,
         }),
-    }).then(() => {
-        window.location.replace("/api/products");
-    });
+    }).then(async(res) => {
+        data = await res.json();
+        if(data.status === "error"){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: data.payload,
+                showConfirmButton: false,
+                iconColor: 'var(--main-color)',
+                background: 'var(--black)',
+                timer: 1500
+              })
+        }
+        if(data.status === 'success') {
+            window.location.replace("/api/products");
+        } 
+      })
+      
+        
+ 
 }

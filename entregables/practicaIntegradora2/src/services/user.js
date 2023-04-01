@@ -8,10 +8,6 @@ const createUserService = async (user) => {
     );
     return newUser;
 };
-const getUserByUsername = async (username) => {
-    const user = await userDAO.getUserByUsername(username);
-    return user;
-};
 const getUserByEmail = async (email) => {
     const user = await userDAO.getUserByEmail(email);
     return user;
@@ -21,4 +17,4 @@ const loginUserService = async (user) => {
     return userInDB;
 };
 
-module.exports = { createUserService, getUserByUsername, loginUserService, getUserByEmail }
+module.exports = { createUserService, loginUserService, getUserByEmail }

@@ -1,11 +1,11 @@
-const form = document.getElementById("formRegister");
+const form = document.getElementById("formLogin");
+
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     submitForm();
 });
 const submitForm = async () => {
-    const user = document.getElementById("userName").value;
-    const email = document.getElementById("userEmail").value;
+    const user = document.getElementById("userEmail").value;
     const password = document.getElementById("userPassword").value;
     await fetch(`${window.location.href}`, {
         method: "post",
@@ -15,8 +15,7 @@ const submitForm = async () => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            username: user,
-            email: email,
+            email: user,
             password: password,
         }),
     }).then(async (res) => {
@@ -33,18 +32,10 @@ const submitForm = async () => {
             })
         }
         if (data.status === 'success') {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: data.payload,
-                showConfirmButton: false,
-                iconColor: 'var(--main-color)',
-                background: 'var(--black)',
-                timer: 1500
-            })
-            setTimeout(() => {
-                window.location.replace("/api/user/login");
-            }, 1500);
+            window.location.replace("/api/products");
         }
-    });
+    })
+
+
+
 }
