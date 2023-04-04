@@ -11,7 +11,6 @@ const getProducts = async (req, res) => {
     try {
         const products = await serviceGetProducts(req.query);
         let user = await getUserByEmail(req.session?.user?.email);
-        res.cookie("cartId", user.cartId);
         const hasNextPage = products.hasNextPage
         const hasPrevPage = products.hasPrevPage
         const sort = products.sort

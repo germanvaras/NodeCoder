@@ -15,7 +15,7 @@ const loginUser = async (req, res) => {
 
         if (validPassword) {
             req.session.user = user;
-            res.send({ status: "success", payload: "Login success" });
+            res.send({ status: "success", payload: "Login success", cartId: user.cartId});
         } else {
             res.status(404).send({ status: "error", payload: "Contraseña Incorrecta" });
         }

@@ -4,7 +4,7 @@ require("dotenv").config();
 const {
     getUserById,
     createUserService,
-    getUserByUsername,
+    getUserByEmail,
 } = require("../services/user");
 
 const initPassport = () => {
@@ -27,10 +27,12 @@ const initPassport = () => {
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
-                    let user = await getUserByUsername(profile.username)
+                    let user = await getUserByEmail(profile.emails[0].value)
                     if (!user) {
                         let newUser = {
-                            username: profile._json.login,
+                            name: profile._json.login,
+                            lastname:"/",
+                            age: 18,
                             email: profile.emails[0].value,
                             password: "",
                         };

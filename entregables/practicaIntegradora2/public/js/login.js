@@ -32,6 +32,7 @@ const submitForm = async () => {
             })
         }
         if (data.status === 'success') {
+            sessionStorage.setItem("cartId", data.cartId);
             window.location.replace("/api/products");
         }
     })
