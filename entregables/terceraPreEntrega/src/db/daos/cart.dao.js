@@ -2,13 +2,18 @@ const mongoose = require('mongoose');
 const Cart = require('../model/cart')
 const CartDTO = require('../DTOs/cart')
 const mapCartToDto = (cart) => {
-    const products = cart.products.map((product) => {
-        return {
-            id: product._id,
-            quantity: product.quantity,
-        };
-    });
-    return new CartDTO(products);
+    const products = cart.products.map(product => {
+        return{
+            _id: product.product._id.toString(),
+            title: product.product.title,
+            price:product.product.price,
+            thumbnail:product.product.thumbnail,
+            quantity: product.quantity
+        }
+        
+    })  
+    let cartDTO = new CartDTO(products);
+    return cartDTO
 }
 
 require("dotenv").config();
@@ -55,8 +60,10 @@ class CartDao {
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            const products = mapCartToDto(cart);
-            return products;  
+            const cartDto = mapCartToDto(cart)
+            console.log(cartDto.products)
+            // me muestra lo mismo que cart.products y de esta forma si me lo renderiza
+            return cartDto.products;  
         }
         catch (err) {
             if (err.name === 'CastError') {
