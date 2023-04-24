@@ -1,20 +1,28 @@
 const mongoose = require('mongoose');
+const Cart = require('../model/cart')
+const CartDTO = require('../DTOs/cart')
+const mapCartToDto = (cart) => {
+    const products = cart.products.map((product) => {
+        return {
+            id: product._id,
+            quantity: product.quantity,
+        };
+    });
+    return new CartDTO(products);
+}
+
 require("dotenv").config();
 const conection = process.env.db
-
 mongoose.connect(conection, error => {
     if (error) {
         console.log('Cannot connect to db')
         process.exit()
     }
 })
-class mongoDbCartContainer {
-    constructor(collection, schema) {
-        this.cartCollection = mongoose.model(collection, schema)
-    }
+class CartDao {
     async getQuantityInCart(id) {
         try {
-            const carts = await this.cartCollection.findOne({ _id: id })
+            const carts = await Cart.findOne({ _id: id })
             return carts.products
         }
         catch (err) {
@@ -23,11 +31,11 @@ class mongoDbCartContainer {
     }
     async getCartById(id) {
         try {
-            const cartId = await this.cartCollection.findOne({ _id: id })
-            if (!cartId) {
+            const cart = await Cart.findOne({ _id: id })
+            if (!cart) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            return cartId._id
+            return cart._id
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -38,17 +46,17 @@ class mongoDbCartContainer {
     }
     async getProductsInCart(id) {
         try {
-            const cartId = await this.cartCollection.findOne({ _id: id }).lean()
+            const cart = await Cart.findOne({ _id: id }).lean()
                 .populate("products.product", {
                     description: 0,
                     code: 0,
                     status: 0
                 })
-            if (!cartId) {
+            if (!cart) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            const products = cartId.products
-            return products
+            const products = mapCartToDto(cart);
+            return products;  
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -59,7 +67,7 @@ class mongoDbCartContainer {
     }
     async createCart() {
         try {
-            const cart = await this.cartCollection.create({});
+            const cart = await Cart.create({});
             return cart;
         } catch (err) {
             return { error: err.message }
@@ -67,11 +75,11 @@ class mongoDbCartContainer {
     }
     async deleteProductsInCart(id) {
         try {
-            const cartId = await this.cartCollection.findOne({ _id: id })
-            if (!cartId) {
+            const cart = await Cart.findOne({ _id: id })
+            if (!cart) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            await this.cartCollection.updateOne({ _id: id }, { $set: { products: [] } })
+            await Cart.updateOne({ _id: id }, { $set: { products: [] } })
             return { eliminado: `Los productos del carrito con id: ${id} han sido eliminados correctamente` }
         }
         catch (err) {
@@ -84,7 +92,7 @@ class mongoDbCartContainer {
     async addProductInCart(id, productId) {
         try {
 
-            const cart = await this.cartCollection.findOne({ _id: id });
+            const cart = await Cart.findOne({ _id: id });
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` };
             }
@@ -105,7 +113,7 @@ class mongoDbCartContainer {
     async deleteProductInCart(id, productId) {
         try {
 
-            const cart = await this.cartCollection.findOne({ _id: id });
+            const cart = await Cart.findOne({ _id: id });
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` };
             }
@@ -123,7 +131,7 @@ class mongoDbCartContainer {
     }
     async updateQuantityProduct(cid, pid, quantity) {
         try {
-            const cart = await this.cartCollection.findOne({ _id: cid });
+            const cart = await Cart.findOne({ _id: cid });
             if (!cart) {
                 return { error: `No existe un carrito con id: ${cid}` };
             }
@@ -148,4 +156,4 @@ class mongoDbCartContainer {
     }
 }
 
-module.exports = mongoDbCartContainer;
+module.exports = CartDao;

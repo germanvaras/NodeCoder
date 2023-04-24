@@ -8,13 +8,13 @@ class ProductRepository {
         return productDao.getById(id);
     }
     async updateProduct(id, product) {
-        return productDao.findOneAndUpdate(id, product);
+        return productDao.updateProduct(id, product);
     }
     async deleteById(id) {
-        return productDao.deleteOne(id);
+        return productDao.deleteById(id);
     }
     async addProduct(product) {
-        return productDao.create(product);
+        return productDao.addProduct(product);
     }
 }
 
