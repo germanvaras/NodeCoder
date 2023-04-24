@@ -1,5 +1,6 @@
 const addProductInCart = async (cid,pid) => {
   const baseUrl = `${window.location.protocol}//${window.location.host}/api/`;
+  console.log(pid)
   const endpoint = `cart/${cid}/product/${pid}`;
   const url = `${baseUrl}${endpoint}`;
   await fetch(url, {

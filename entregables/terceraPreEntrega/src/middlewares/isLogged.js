@@ -1,6 +1,6 @@
-const { getUserByUsername } = require("../services/user");
+const { getUserByEmail} = require("../services/user");
 const isLogged = async (req, res, next) => {
-    const user = await getUserByUsername(req.session?.user?.username);
+    const user = await getUserByEmail(req.session?.user?.email);
     if(user){
         next()
     }else{

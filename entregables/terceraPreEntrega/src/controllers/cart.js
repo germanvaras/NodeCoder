@@ -7,11 +7,10 @@ const {
     serviceDeleteCartProduct,
     updateQuantityProductService
 } = require('../services/cart')
-const { getUserByUsername } = require("../services/user");
+const { getUserByEmail } = require("../services/user");
 const getQuantityInCart = async (req, res) => {
     const productsInCart = await serviceQuantityInCart(req.params.cid)
     res.send(productsInCart)
-   
 }
 const createCart = async (req, res) => {
     try {
@@ -25,7 +24,7 @@ const createCart = async (req, res) => {
 const getProductsInCart = async (req, res) => {
 
     const productsInCart = await serviceGetProductsInCart(req.params.cid)
-    let user = await getUserByUsername(req.session?.user?.username);
+    let user = await getUserByEmail(req.session?.user?.email);
     res.render("cart", { style: "index.css", title: "Cart", productsInCart, user})
 }
 const deleteProductsInCart = async (req, res) => {

@@ -1,4 +1,11 @@
 const mongoose = require('mongoose');
+const Product = require('../model/product');
+const ProductDTO = require('../DTOs/product')
+
+const createProductDtoFromObject = (obj) => {
+    const {_id, title, description, code, price, stock, category, thumbnail } = obj;
+    return new ProductDTO(_id, title, description, code, price, stock, category, thumbnail);
+}
 require("dotenv").config;
 const conection = process.env.db
 mongoose.connect(conection, error => {
@@ -7,10 +14,7 @@ mongoose.connect(conection, error => {
         process.exit()
     }
 })
-class mongoDbProductContainer {
-    constructor(collection, schema) {
-        this.productCollection = mongoose.model(collection, schema)
-    }
+class ProductDao {
     async getProducts({query, limit, page, sort}) {
         const setLimit = limit ? limit : 10
         const setPage = page ? page : 1
@@ -23,7 +27,7 @@ class mongoDbProductContainer {
             lean: true
         }
         try {
-            const products = await this.productCollection.paginate(setQuery, options)
+            const products = await Product.paginate(setQuery, options)
             return {...products, query, sort};
 
         }
@@ -33,11 +37,12 @@ class mongoDbProductContainer {
     }
     async getById(id) {
         try {
-            const product = await this.productCollection.findOne({ _id: id }).lean()
+            const product = await Product.findOne({ _id: id }).lean()
             if (!product) {
                 return { error: `No existe un producto con el id: ${id}` }
             }
-            return product
+        return createProductDtoFromObject (product)
+
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -48,7 +53,7 @@ class mongoDbProductContainer {
     }
     async addProduct(product) {
         try {
-            const newProduct = new this.productCollection(product)
+            const newProduct = new Product(product)
             const validationError = newProduct.validateSync()
             if (validationError) {
                 const errorMessages = []
@@ -59,19 +64,19 @@ class mongoDbProductContainer {
                 return { error: errorMessages }
             }
             const createdProduct = await newProduct.save()
-            return createdProduct
+            return createProductDtoFromObject (createdProduct)
+
         } catch (err) {
             return { error: err.message }
         }
     }
     async updateProduct(id, product) {
         try {
-            const updatedProduct = await this.productCollection.findOneAndUpdate(
+            const updatedProduct = await Product.findOneAndUpdate(
                 { _id: id },
                 product,
                 { new: true }
             )
-
             if (!updatedProduct) {
                 return { error: `No existe producto con id: ${id}` }
             }
@@ -85,13 +90,14 @@ class mongoDbProductContainer {
     }
     async deleteById(id) {
         try {
-            const deleteProduct = await this.productCollection.deleteOne({ _id: id })
+            const deleteProduct = await Product.deleteOne({ _id: id })
             if (deleteProduct.deletedCount === 0) {
                 return { error: `No existe producto con id:${id}` }
             }
 
             const deletedProduct = { Eliminado: `El producto con el id: ${id} ha sido elimnado correctamente` }
-            return deletedProduct
+            return createProductDtoFromObject (deletedProduct)
+
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -102,4 +108,4 @@ class mongoDbProductContainer {
     }
 }
 
-module.exports = mongoDbProductContainer;
+module.exports = ProductDao;

@@ -1,4 +1,4 @@
-const mongoDbCartContainer = require('../db/cart.dao.js')
+const mongoDbCartContainer = require('../db/daos/cart.dao.js')
 const cartSchema = require('../db/model/cart.js')
 const cartDAO = new mongoDbCartContainer('cart', cartSchema)
 const serviceQuantityInCart = async (id) => {

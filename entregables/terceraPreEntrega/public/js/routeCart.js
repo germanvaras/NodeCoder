@@ -1,6 +1,7 @@
 const cartDataSpan = document.getElementById("cartQuantity");
 const cartLink = document.querySelector('#cartLink');
-let cartId = document.cookie.split("=")[1];
+let cartId = sessionStorage.getItem("cartId");
+console.log(cartId)
 const url = `${window.location.protocol}//${window.location.host}/api/cart/${cartId}`
 cartLink.href = url;
 const getQuantityInCart = async () => {

@@ -1,7 +1,7 @@
 const { getUserByEmail } = require("../services/user");
-const isAdmin = async (req, res, next) => {
+const isUser = async (req, res, next) => {
     const user = await getUserByEmail(req.session?.user);
-    if (user?.rol === "admin") {
+    if (user?.rol === "user") {
         next();
     } else {
         res.status(401).send({
@@ -11,4 +11,4 @@ const isAdmin = async (req, res, next) => {
         });
     }
 };
-module.exports = isAdmin;
+module.exports = isUser;

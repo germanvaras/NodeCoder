@@ -5,13 +5,12 @@ const {
     serviceUpdateProduct,
     serviceDeleteById
 } = require('../services/product.js')
-const { getUserByUsername } = require("../services/user");
+const { getUserByEmail } = require("../services/user");
 const getProducts = async (req, res) => {
     
     try {
         const products = await serviceGetProducts(req.query);
-        let user = await getUserByUsername(req.session?.user?.username);
-        res.cookie("cartId", user.cartId);
+        let user = await getUserByEmail(req.session?.user?.email);
         const hasNextPage = products.hasNextPage
         const hasPrevPage = products.hasPrevPage
         const sort = products.sort
@@ -38,7 +37,7 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     const id = req.params.pid
     let product = await serviceGetById(id)
-    let user = await getUserByUsername(req.session?.user?.username);
+    let user = await getUserByEmail(req.session?.user?.email);
     res.render("detailProduct",
         {
             style: "index.css",

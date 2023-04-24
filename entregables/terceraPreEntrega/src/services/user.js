@@ -1,4 +1,4 @@
-const mongoDbUserContainer = require('../db/user.dao.js')
+const mongoDbUserContainer = require('../db/daos/user.dao.js')
 const userSchema = require('../db/model/user.js')
 const userDAO = new mongoDbUserContainer('user', userSchema)
 const { serviceAddCart } = require("./cart")
@@ -7,10 +7,6 @@ const createUserService = async (user) => {
     const newUser = await userDAO.createUser(user, newCart._id
     );
     return newUser;
-};
-const getUserByUsername = async (username) => {
-    const user = await userDAO.getUserByUsername(username);
-    return user;
 };
 const getUserByEmail = async (email) => {
     const user = await userDAO.getUserByEmail(email);
@@ -21,4 +17,4 @@ const loginUserService = async (user) => {
     return userInDB;
 };
 
-module.exports = { createUserService, getUserByUsername, loginUserService, getUserByEmail }
+module.exports = { createUserService, loginUserService, getUserByEmail }

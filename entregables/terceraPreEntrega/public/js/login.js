@@ -5,7 +5,7 @@ form.addEventListener("submit", (event) => {
     submitForm();
 });
 const submitForm = async () => {
-    const  user = document.getElementById("userName").value;
+    const user = document.getElementById("userEmail").value;
     const password = document.getElementById("userPassword").value;
     await fetch(`${window.location.href}`, {
         method: "post",
@@ -15,12 +15,12 @@ const submitForm = async () => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            username: user ,
+            email: user,
             password: password,
         }),
-    }).then(async(res) => {
+    }).then(async (res) => {
         data = await res.json();
-        if(data.status === "error"){
+        if (data.status === "error") {
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -29,13 +29,14 @@ const submitForm = async () => {
                 iconColor: 'var(--main-color)',
                 background: 'var(--black)',
                 timer: 1500
-              })
+            })
         }
-        if(data.status === 'success') {
+        if (data.status === 'success') {
+            sessionStorage.setItem("cartId", data.cartId);
             window.location.replace("/api/products");
-        } 
-      })
-      
-        
- 
+        }
+    })
+
+
+
 }
