@@ -3,15 +3,15 @@ const Cart = require('../model/cart')
 const CartDTO = require('../DTOs/cart')
 const mapCartToDto = (cart) => {
     const products = cart.products.map(product => {
-        return{
-            _id: product.product._id.toString(),
+        return {
+            _id: product.product._id,
             title: product.product.title,
-            price:product.product.price,
-            thumbnail:product.product.thumbnail,
+            price: product.product.price,
+            thumbnail: product.product.thumbnail,
             quantity: product.quantity
         }
-        
-    })  
+
+    })
     let cartDTO = new CartDTO(products);
     return cartDTO
 }
@@ -40,7 +40,7 @@ class CartDao {
             if (!cart) {
                 return { error: `No existe un cart con id: ${id}` }
             }
-            return cart._id
+            return mapCartToDto(cart._id)
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -61,9 +61,7 @@ class CartDao {
                 return { error: `No existe un cart con id: ${id}` }
             }
             const cartDto = mapCartToDto(cart)
-            console.log(cartDto.products)
-            // me muestra lo mismo que cart.products y de esta forma si me lo renderiza
-            return cartDto.products;  
+            return cartDto.products;
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -111,7 +109,8 @@ class CartDao {
                 cart.products.push(newProduct);
             }
             const updatedCart = await cart.save();
-            return updatedCart.products;
+            const updateCartDTO = mapCartToDto(updatedCart)
+            return updateCartDTO.products;
 
         } catch (err) {
             return { error: err.message };
@@ -130,7 +129,8 @@ class CartDao {
             }
             cart.products.splice(productIndex, 1);
             const updatedCart = await cart.save();
-            return updatedCart.products;
+            const updateCartDTO = mapCartToDto(updatedCart)
+            return updateCartDTO.products;
 
         } catch (err) {
             return { error: err.message };
@@ -156,7 +156,8 @@ class CartDao {
                 cart.products[productIndex].quantity = quantity;
             }
             const updatedCart = await cart.save();
-            return updatedCart.products;
+            const updateCartDTO = mapCartToDto(updatedCart)
+            return updateCartDTO.products;
         } catch (err) {
             return { error: err.message };
         }

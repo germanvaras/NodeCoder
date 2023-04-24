@@ -20,29 +20,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="product{{this.product._id}}">
+                <tr class="product{{this._id}}">
                     <td>
-                        <img class="cartProductImg" src="{{this.product.thumbnail}}" alt="{{this.product.title}}">
+                        <img class="cartProductImg" src="{{this.thumbnail}}" alt="{{this.product.title}}">
                     </td>
                     <td>
-                        <p>{{this.product.title}}</p>
+                        <p>{{this.title}}</p>
                     </td>
                     <td>
                         <div class="containerQuantity">
-                            <button onclick="minusQuantity('{{this.product._id}}')" class="cardButton">
+                            <button onclick="minusQuantity('{{this._id}}')" class="cardButton">
                                 -
                             </button>
                             <p class="quantity">{{this.quantity}}</p>
-                            <button onclick="plusQuantity('{{this.product._id}}')" class="cardButton">
+                            <button onclick="plusQuantity('{{this._id}}')" class="cardButton">
                                 +
                             </button>
                         </div>
                     </td>
                     <td>
-                        <p>${{this.product.price}}</p>
+                        <p>${{this.price}}</p>
                     </td>
                     <td><button class="cardButton"
-                            onclick="deleteProductInCart('{{this.product._id}}')">Eliminar</button></td>
+                            onclick="deleteProductInCart('{{this._id}}')">Eliminar</button></td>
                 </tr>
             </tbody>
             {{/each}}
