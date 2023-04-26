@@ -1,13 +1,12 @@
-const mongoDbMessageContainer = require('../db/daos/message.dao')
-const messageSchema = require('../db/model/message.js')
-const chatDAO = new mongoDbMessageContainer('message', messageSchema)
+const MessageRepository = require('../db/repositories/message')
+const messageRepository = new MessageRepository()
 const getMessagesServices = async () => {
-  let response = await chatDAO.getAllMessages();
+  let response = await messageRepository.getAllMessages();
   return response;
 };
 
 const addMessageServices = async (message) => {
-    let response = await chatDAO.createMessage(message);
+    let response = await messageRepository.createMessage(message);
     return response;
 };
 module.exports = { getMessagesServices, addMessageServices }

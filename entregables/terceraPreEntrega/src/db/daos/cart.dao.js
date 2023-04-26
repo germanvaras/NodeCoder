@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Cart = require('../model/cart')
 const CartDTO = require('../DTOs/cart')
 const mapCartToDto = (cart) => {
@@ -15,15 +14,6 @@ const mapCartToDto = (cart) => {
     let cartDTO = new CartDTO(products);
     return cartDTO
 }
-
-require("dotenv").config();
-const conection = process.env.db
-mongoose.connect(conection, error => {
-    if (error) {
-        console.log('Cannot connect to db')
-        process.exit()
-    }
-})
 class CartDao {
     async getQuantityInCart(id) {
         try {

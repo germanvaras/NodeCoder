@@ -1,19 +1,18 @@
-const mongoDbUserContainer = require('../db/daos/user.dao.js')
-const userSchema = require('../db/model/user.js')
-const userDAO = new mongoDbUserContainer('user', userSchema)
+const UserRepository = require('../db/repositories/user')
+const userRepository = new UserRepository()
 const { serviceAddCart } = require("./cart")
 const createUserService = async (user) => {
     const newCart = await serviceAddCart();
-    const newUser = await userDAO.createUser(user, newCart._id
+    const newUser = await userRepository.createUser(user, newCart._id
     );
     return newUser;
 };
 const getUserByEmail = async (email) => {
-    const user = await userDAO.getUserByEmail(email);
+    const user = await userRepository.getUserByEmail(email);
     return user;
 }
 const loginUserService = async (user) => {
-    const userInDB = await userDAO.findUser(user);
+    const userInDB = await userRepository.findUser(user);
     return userInDB;
 };
 

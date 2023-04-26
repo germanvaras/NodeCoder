@@ -63,6 +63,7 @@ const deleteById = async (req, res) => {
     res.send(deletedProduct);
 }
 const formCreate = async(req, res) =>{
-    res.render("formCreate", {style:"index.css", title:"Form Create"})
+    const products = await serviceGetProducts(req.query);
+    res.render("formCreate", {style:"index.css", title:"Form Create", products})
 }
 module.exports = { addProduct, getProducts, getProductById, updateProductById, deleteById, formCreate };

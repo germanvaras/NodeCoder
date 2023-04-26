@@ -1,5 +1,6 @@
 class MessageDto {
-    constructor(user, message) {
+    constructor(_id, user, message) {
+        this._id = _id;
         this.user = user;
         this.message = message;
     }

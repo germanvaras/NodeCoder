@@ -33,8 +33,7 @@ const submitForm = async () => {
 
         }),
     });
-    location.reload();
-
+    location.reload()
 };
 const deleteProduct = async (id) => {
     await fetch(`${window.location.href}/${id}`, {
@@ -45,5 +44,5 @@ const deleteProduct = async (id) => {
             "Content-Type": "application/json",
         },
     });
-    location.reload();
+    location.reload()
 }

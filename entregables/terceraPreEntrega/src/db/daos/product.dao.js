@@ -1,19 +1,10 @@
-const mongoose = require('mongoose');
 const Product = require('../model/product');
 const ProductDTO = require('../DTOs/product')
-
 const createProductDtoFromObject = (obj) => {
     const {_id, title, description, code, price, stock, category, thumbnail } = obj;
     return new ProductDTO(_id, title, description, code, price, stock, category, thumbnail);
 }
 require("dotenv").config;
-const conection = process.env.db
-mongoose.connect(conection, error => {
-    if (error) {
-        console.log('Cannot connect to db')
-        process.exit()
-    }
-})
 class ProductDao {
     async getProducts({query, limit, page, sort}) {
         const setLimit = limit ? limit : 10
@@ -29,7 +20,6 @@ class ProductDao {
         try {
             const products = await Product.paginate(setQuery, options)
             return {...products, query, sort};
-
         }
         catch (err) {
             return { error: err.message }
@@ -94,10 +84,8 @@ class ProductDao {
             if (deleteProduct.deletedCount === 0) {
                 return { error: `No existe producto con id:${id}` }
             }
-
             const deletedProduct = { Eliminado: `El producto con el id: ${id} ha sido elimnado correctamente` }
             return createProductDtoFromObject (deletedProduct)
-
         }
         catch (err) {
             if (err.name === 'CastError') {

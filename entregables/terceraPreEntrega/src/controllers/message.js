@@ -1,18 +1,15 @@
-const {
-    getMessagesServices,
-    addMessageServices,
-} = require("../services/message");
-
-const getMessages = async () => {
-    const messages = await getMessagesServices();
-    return messages;
+const getAllMessages = async (req, res) => {
+    res.render("chat", {
+        title: "Chat",
+        style: "index.css",
+    });
 };
-
-const addMessages = async (message) => {
-
-    const result = await addMessageServices(message);
-    return result;
+const addMessages = async (req, res) => {
+    await require("../app").addMessages(req.body);
+    res.send({ status: "success", payload: "Message Added" });
 };
-
-module.exports = { getMessages, addMessages };
+module.exports = {
+    getAllMessages,
+    addMessages,
+};
 

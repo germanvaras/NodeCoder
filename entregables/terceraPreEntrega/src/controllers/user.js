@@ -1,7 +1,6 @@
 const {
     createUserService,
     loginUserService,
-    getUserByEmail,
 } = require("../services/user");
 const { isValidPassword } = require("../utils/hashPassword");
 
@@ -30,8 +29,8 @@ const formRegisterUser = (req, res) => {
 
 const createUser = async (req, res,) => {
     try {
-        let exitEmail = await getUserByEmail(req.body.email)
-        if(!exitEmail) {
+        let existEmail = await loginUserService(req.body)
+        if(!existEmail.email) {
             await createUserService(req.body);
             res.status(201)
             .send({ status: "success", payload: "Usuario creado correctamente" });
@@ -40,7 +39,7 @@ const createUser = async (req, res,) => {
             res.status(403).send({ status: "error", payload:"Usuario Ocupado"})
         }
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send({ status: "No se pudo crear el usuario" });
     }
 };

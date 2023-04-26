@@ -13,8 +13,8 @@ const {
 
 productsRouter.get('/', isLogged, getProducts)
 productsRouter.get('/form',isAdmin, formCreate)
+productsRouter.post('/form' ,isAdmin, addProduct)
 productsRouter.get('/:pid',isLogged, getProductById)
-productsRouter.post('/' ,isAdmin, addProduct)
 productsRouter.put('/:pid',isAdmin, updateProductById)
 productsRouter.delete('/:pid',isAdmin, deleteById)
 

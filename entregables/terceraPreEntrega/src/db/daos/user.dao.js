@@ -1,25 +1,28 @@
-const mongoose = require("mongoose");
+const User = require("../model/user")
+const UserDTO = require("../DTOs/user")
+const createUserDtoFromObject = (obj) => {
+    const {_id, name, lastname, email, age, password, rol, cartId} = obj;
+    let userDto =  new UserDTO(_id, name, lastname, email, age, password, rol, cartId);
+    return userDto
+}
 class UserDAO {
-    constructor(collection, schema) {
-        this.userCollection = mongoose.model(collection, schema);
-    }
     async getUserByEmail(email) {
-        const user = await this.userCollection
+        const user = await User
             .findOne({ email: email})
             .lean();
-        return user;
+        return createUserDtoFromObject(user);
     }
     async createUser(user, cid) {
-        const newUser = await this.userCollection.create({
+        const newUser = await User.create({
             ...user,
             cartId: cid
         });
-        return newUser;
+        return createUserDtoFromObject(newUser);
     }
     async findUser(user) {
-        let existUser = await this.userCollection.findOne({ email: user.email });
+        let existUser = await User.findOne({ email: user.email });
         if (!existUser) return { status:"error", payload: "Usuario inexistente" };
-        return existUser;
+        return createUserDtoFromObject(existUser);
     }
 }
 

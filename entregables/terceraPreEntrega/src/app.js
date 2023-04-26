@@ -1,3 +1,4 @@
+require("./db/daos/index");
 const express = require ("express");
 const app = express();
 require("dotenv").config();
@@ -56,9 +57,9 @@ httpServer.on("error", error => console.log(error))
 
 // socket connection, TODO: separar de app
 const io = new Server(httpServer);
-const { getMessages, addMessages } = require("./controllers/message");
+const { getMessagesServices, addMessageServices } = require("./services/message");
 const recoverMessages = async () => {
-    const messages = await getMessages();
+    const messages = await getMessagesServices();
     return messages;
   };
   
@@ -69,7 +70,7 @@ const recoverMessages = async () => {
   module.exports = {
     httpServer,
     addMessages: async function (message) {
-      await addMessages(message);
+      await addMessageServices(message);
       io.emit("all messages", await recoverMessages());
     },
 };

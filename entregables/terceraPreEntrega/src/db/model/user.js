@@ -37,4 +37,5 @@ userSchema.pre("save", function (next) {
     user.password = createHash(this.password);
     next();
 });
-module.exports = userSchema
+const User = mongoose.model('user', userSchema);
+module.exports = User
