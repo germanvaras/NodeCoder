@@ -25,27 +25,12 @@ const submitForm = async () => {
         }),
     }).then(async (res) => {
         data = await res.json();
+        console.log(data)
         if (data.status === "error") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: data.payload,
-                showConfirmButton: false,
-                iconColor: 'var(--main-color)',
-                background: 'var(--black)',
-                timer: 1500
-            })
+            alerts(data.status, data.payload)
         }
         if (data.status === 'success') {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: data.payload,
-                showConfirmButton: false,
-                iconColor: 'var(--main-color)',
-                background: 'var(--black)',
-                timer: 1500
-            })
+            alerts(data.status, data.payload)
             setTimeout(() => {
                 window.location.replace("/api/user/login");
             }, 1500);

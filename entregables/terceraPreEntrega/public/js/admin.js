@@ -1,6 +1,5 @@
 const productsContainer = document.getElementById('products')
 const form = document.getElementById("formProduct");
-let url = window.location.href;
 const pageLink = document.querySelector('.pageLink');
 form.addEventListener("submit", (event) => {
     event.preventDefault();

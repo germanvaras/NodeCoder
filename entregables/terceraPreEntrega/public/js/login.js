@@ -21,15 +21,7 @@ const submitForm = async () => {
     }).then(async (res) => {
         data = await res.json();
         if (data.status === "error") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: data.payload,
-                showConfirmButton: false,
-                iconColor: 'var(--main-color)',
-                background: 'var(--black)',
-                timer: 1500
-            })
+            alerts(data.status, data.payload)
         }
         if (data.status === 'success') {
             sessionStorage.setItem("cartId", data.cartId);

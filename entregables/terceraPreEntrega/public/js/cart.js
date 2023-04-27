@@ -1,16 +1,25 @@
-const addProductInCart = async (cid,pid) => {
+const addProductInCart = async (cid, pid) => {
   const baseUrl = `${window.location.protocol}//${window.location.host}/api/`;
   const endpoint = `cart/${cid}/product/${pid}`;
   const url = `${baseUrl}${endpoint}`;
   await fetch(url, {
-      method: "post",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-          "Content-Type": "application/json",
-      },
-  });
-  getCart()
+    method: "post",
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => response.json())
+  .then((data) => {
+    if (data.status === "Unauthorized") {
+      alerts(data.status, data.payload)
+    }
+    else {
+      alerts(data.status, data.payload)
+      getCart()
+    }
+  })
+  
 };
 const deleteProductInCart = async (pid) => {
   await fetch(`${window.location.href}/product/${pid}`, {
@@ -21,10 +30,15 @@ const deleteProductInCart = async (pid) => {
       "Content-Type": "application/json",
     },
   }).then((response) => response.json())
-  .then(() => {
-    window.location.reload()
-  });
-};
+    .then((data) => {
+      if (data.status === "Unauthorized") {
+        unauthorizedAlert(data.payload)
+      }
+      else {
+        window.location.reload()
+      }
+    })
+}
 const deleteProductsInCart = async () => {
   await fetch(`${window.location.href}`, {
     method: "delete",
@@ -34,9 +48,14 @@ const deleteProductsInCart = async () => {
       "Content-Type": "application/json",
     },
   }).then((response) => response.json())
-    .then(() => {
-      window.location.reload()
-});
+    .then((data) => {
+      if (data.status === "Unauthorized") {
+        unauthorizedAlert(data.payload)
+      }
+      else {
+        window.location.reload()
+      }
+    });
 
 };
 const minusQuantity = async (pid) => {
@@ -45,7 +64,7 @@ const minusQuantity = async (pid) => {
   if (Number(quantity.innerHTML) !== 0) {
     quantity.innerHTML = Number(quantity.innerHTML) - 1;
     await getQuantityInCart() + 1
-   
+
     setQuantity(pid);
   }
 };

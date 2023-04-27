@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const cartRouter = Router();
 const isLogged = require('../middlewares/isLogged')
+const isUser = require('../middlewares/isUser')
 const {
     getQuantityInCart,
     createCart, 
@@ -13,9 +14,9 @@ const {
 cartRouter.get('/quantity/:cid',isLogged, getQuantityInCart)
 cartRouter.post('/',isLogged, createCart)
 cartRouter.get('/:cid',isLogged, getProductsInCart)
-cartRouter.delete('/:cid',isLogged, deleteProductsInCart)
-cartRouter.post('/:cid/product/:pid',isLogged, addProductInCart)
-cartRouter.delete('/:cid/product/:pid',isLogged, deleteProductInCart)
-cartRouter.put("/:cid/product/:pid",isLogged, updateQuantityProduct);
+cartRouter.delete('/:cid',isLogged, isUser, deleteProductsInCart)
+cartRouter.post('/:cid/product/:pid',isLogged, isUser, addProductInCart)
+cartRouter.delete('/:cid/product/:pid',isLogged,isUser, deleteProductInCart)
+cartRouter.put("/:cid/product/:pid",isLogged,isUser, updateQuantityProduct);
 
 module.exports = cartRouter

@@ -63,7 +63,8 @@ const deleteById = async (req, res) => {
     res.send(deletedProduct);
 }
 const formCreate = async(req, res) =>{
+    let user = await getUserByEmail(req.session?.user?.email);
     const products = await serviceGetProducts(req.query);
-    res.render("formCreate", {style:"index.css", title:"Form Create", products})
+    res.render("formCreate", {style:"index.css", title:"Form Create", products, user})
 }
 module.exports = { addProduct, getProducts, getProductById, updateProductById, deleteById, formCreate };

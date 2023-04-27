@@ -4,11 +4,7 @@ const isAdmin = async (req, res, next) => {
     if (user?.rol === "admin") {
         next();
     } else {
-        res.status(401).send({
-            status: "Unauthorized",
-            message: "No posee la autorización para realizar esta acción",
-            code: 401,
-        });
+        res.render("401", { style: "index.css", user});
     }
 };
 module.exports = isAdmin;

@@ -1,9 +1,11 @@
 const cartDataSpan = document.getElementById("cartQuantity");
 const cartLink = document.querySelector('#cartLink');
 let cartId = sessionStorage.getItem("cartId");
-console.log(cartId)
 const url = `${window.location.protocol}//${window.location.host}/api/cart/${cartId}`
 cartLink.href = url;
+const backHome = () => {
+    location.href = `${window.location.protocol}//${window.location.host}/api/products`
+}
 const getQuantityInCart = async () => {
     let quantity = 0
     try {

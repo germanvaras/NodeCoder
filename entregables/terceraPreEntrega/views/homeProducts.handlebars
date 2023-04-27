@@ -4,6 +4,8 @@
         <h3>Bienvenido: {{user.name}}</h3>
         {{else}}
         {{/if}}
+        <button class="buttonBlack" id="{{user.rol}}">
+        </button>
         <div class="orderPrice">
             <h3>Ordenar por precio</h3>
                 <button class="buttonFilters" onclick="sortAsc('{{sort}}')">
@@ -27,7 +29,7 @@
     </div>
     <div class="productsContainer">
         {{#if query}}
-        <h1>Productos{{query}}</h1>
+        <h1>Productos {{query}}</h1>
         {{else}}
         <h1>Todos los Productos</h1>
         {{/if}}
@@ -38,10 +40,8 @@
                     <img class="cardImg" src={{this.thumbnail}} alt={{this.title}}>
                     <h3 class="cardTitle">{{this.title}}</h3>
                     <p class="cardDescription">{{this.description}}</p>
-                    <p class="cardPrice">Price: ${{this.price}}</p>
-                    <a href="/api/products/{{this._id}}" class=""><button class="cardButton">Go detail</button></a>
-                    {{!-- <button class="cardButton" onclick="deleteProduct('{{this._id}}')"
-                        class="iconTrash">Eliminar</button> --}}
+                    <p class="cardPrice">Precio: ${{this.price}}</p>
+                    <a href="/api/products/{{this._id}}" class=""><button class="cardButton">Detalle</button></a>
                 </div>
             </div>
             {{/each}}

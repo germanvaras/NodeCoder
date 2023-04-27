@@ -13,9 +13,10 @@ const {
 
 productsRouter.get('/', isLogged, getProducts)
 productsRouter.get('/form',isAdmin, formCreate)
-productsRouter.post('/form' ,isAdmin, addProduct)
+productsRouter.post('/form', isAdmin, addProduct)
+productsRouter.delete('/form/:pid',isAdmin, deleteById)
 productsRouter.get('/:pid',isLogged, getProductById)
 productsRouter.put('/:pid',isAdmin, updateProductById)
-productsRouter.delete('/:pid',isAdmin, deleteById)
+
 
 module.exports = productsRouter

@@ -22,7 +22,6 @@ const createCart = async (req, res) => {
 };
 
 const getProductsInCart = async (req, res) => {
-
     const productsInCart = await serviceGetProductsInCart(req.params.cid)
     let user = await getUserByEmail(req.session?.user?.email);
     res.render("cart", { style: "index.css", title: "Cart", productsInCart, user})
@@ -33,7 +32,7 @@ const deleteProductsInCart = async (req, res) => {
 }
 const addProductInCart = async (req, res) => {
     const addProduct = await serviceAddCartProduct(req.params)
-    res.send(addProduct)
+    res.send({status:"success", payload:`Producto agregado al carrito`,addProduct})
 }
 const deleteProductInCart = async (req, res) => {
     const deleteProduct = await serviceDeleteCartProduct(req.params)

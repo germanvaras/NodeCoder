@@ -20,7 +20,7 @@ const showMessages = (messages) => {
   messageContainer.innerHTML = "";
   messages.forEach((element) => {
     const message = document.createElement("div");
-    message.className ="messageContainer";
+    message.className = "messageContainer";
     message.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <path fill="#efa51e" d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/></svg>
     <h3 class="userChat">${element.user}:</h3> 
@@ -34,8 +34,7 @@ const sendMessages = async () => {
   let email = document.getElementById("user");
   let message = document.getElementById("userMessage");
   console.log(window.location.href);
-  
- await fetch(`${window.location.href}`, {
+  await fetch(`${window.location.href}`, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -45,9 +44,8 @@ const sendMessages = async () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      window.console.log(data);
-      if (data.status === "error") {
-        alert(data.error);
+      if (data.status === "Unauthorized") {
+        alerts(data.status, data.payload)
       }
     });
 
