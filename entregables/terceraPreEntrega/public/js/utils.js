@@ -1,5 +1,4 @@
-const alerts = (status ,errorMessage) => {
-    status === "error" || "Unauthorized" ? status = "error" : status = "success"
+const alerts = (status, errorMessage) => {
     Swal.fire({
         position: 'top-end',
         icon: status,
@@ -7,6 +6,9 @@ const alerts = (status ,errorMessage) => {
         showConfirmButton: false,
         iconColor: 'var(--main-color)',
         background: 'var(--black)',
-        timer: 15000
+        timer: 1500
     })
+}
+const backHome = () => {
+    location.href = `${window.location.protocol}//${window.location.host}/api/products`
 }

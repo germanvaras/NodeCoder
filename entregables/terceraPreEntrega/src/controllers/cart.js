@@ -5,7 +5,7 @@ const {
     serviceDeleteProductsInCart,
     serviceQuantityInCart,
     serviceDeleteCartProduct,
-    updateQuantityProductService
+    serviceUpdateQuantityProduct
 } = require('../services/cart')
 const { getUserByEmail } = require("../services/user");
 const getQuantityInCart = async (req, res) => {
@@ -39,7 +39,8 @@ const deleteProductInCart = async (req, res) => {
     res.send(deleteProduct)
 }
 const updateQuantityProduct = async (req, res) => {
-    const result = await updateQuantityProductService(req.params, req.body);
+    const result = await serviceUpdateQuantityProduct(req.params, req.body);
     res.send(result);
 };
+
 module.exports = { getQuantityInCart, createCart, getProductsInCart, deleteProductsInCart, addProductInCart, deleteProductInCart, updateQuantityProduct }

@@ -1,7 +1,7 @@
 const {
     serviceAddProduct,
     serviceGetProducts,
-    serviceGetById,
+    serviceGetProductById,
     serviceUpdateProduct,
     serviceDeleteById
 } = require('../services/product.js')
@@ -36,7 +36,7 @@ const getProducts = async (req, res) => {
 }
 const getProductById = async (req, res) => {
     const id = req.params.pid
-    let product = await serviceGetById(id)
+    let product = await serviceGetProductById(id)
     let user = await getUserByEmail(req.session?.user?.email);
     res.render("detailProduct",
         {

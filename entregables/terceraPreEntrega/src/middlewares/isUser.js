@@ -5,7 +5,7 @@ const isUser = async (req, res, next) => {
         next();
     } else {
         res.status(401).send({
-            status: "Unauthorized",
+            status: "error",
             payload: "No posee la autorización para realizar esta acción",
         });
     }

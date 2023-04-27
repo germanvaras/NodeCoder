@@ -41,28 +41,31 @@
                     <td>
                         <p>${{this.price}}</p>
                     </td>
-                    <td><button class="cardButton"
+                    <td><button class="cardButton "
                             onclick="deleteProductInCart('{{this._id}}')">Eliminar</button></td>
                 </tr>
             </tbody>
             {{/each}}
         </table>
         <div class="buttonCartContainer">
-            <button class="buttonBlack" onclick="deleteProductsInCart()">Vaciar Carrito</button>
+            <button class="buttonBlack" onclick="purchaseProducts()">Finalizar Compra</button>
         </div>
         <div class="buttonCartContainer">
-            <button class="buttonBlack"><a class="linkForm" href="http://localhost:4200/api/products">Volver a Home</a></button>
+            <button class="buttonFilters removeFilters" onclick="deleteProductsInCart()">Vaciar Carrito</button>
+        </div>
+        <div class="buttonCartContainer">
+            <button class="buttonFilters" onclick="backHome()">Volver a Home</a></button>
         </div>
     </div>
-
     {{else}}
     <div class="emptyCartContainer">
         <h3 class="emptyTitle">No hay productos en el carrito :(</h3>
         <div class="buttonCartContainer">
-            <button class="buttonBlack"><a class="linkForm" href="http://localhost:4200/api/products">Volver a Home</a></button>
+            <button class="buttonBlack" onclick="backHome()">Volver a Home</a></button>
         </div>
     </div>
 
     {{/if}}
 </div>
 <script src="/js/cart.js"></script>
+<script src="/js/purchase.js"></script>

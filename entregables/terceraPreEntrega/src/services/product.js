@@ -4,7 +4,7 @@ const serviceGetProducts = async (filters) =>{
     let getProducts = await productRepository.getProducts(filters)
     return getProducts;
 }
-const serviceGetById = async (id) => {
+const serviceGetProductById = async (id) => {
     let getById = await productRepository.getById(id)
     return getById;
 }
@@ -20,4 +20,4 @@ const serviceDeleteById = async (id) => {
     let deleteById = await productRepository.deleteById(id)
     return deleteById;
 }
-module.exports = {serviceAddProduct, serviceGetProducts,serviceGetById, serviceUpdateProduct, serviceDeleteById}
+module.exports = {serviceAddProduct, serviceGetProducts,serviceGetProductById, serviceUpdateProduct, serviceDeleteById}
