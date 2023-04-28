@@ -3,6 +3,7 @@ const ticketSchema = mongoose.Schema({
     code:{type: String},
     purchase_dateTime:{type: Date},
     amount:{type: Number},
-    purcharser:{type: String},
+    purchaser:{type: String},
 })
-module.exports = ticketSchema
+const Ticket = mongoose.model('ticket', ticketSchema);
+module.exports = Ticket

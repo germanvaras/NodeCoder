@@ -35,7 +35,7 @@ const addProductInCart = async (req, res) => {
     res.send({status:"success", payload:`Producto agregado al carrito`,addProduct})
 }
 const deleteProductInCart = async (req, res) => {
-    const deleteProduct = await serviceDeleteCartProduct(req.params)
+    const deleteProduct = await serviceDeleteCartProduct(req.params.cid, req.params.pid)
     res.send(deleteProduct)
 }
 const updateQuantityProduct = async (req, res) => {

@@ -22,20 +22,21 @@ const purchaseProducts = async (req, res) => {
                 product.stock -= productInCart.quantity; 
                 await serviceUpdateProduct(productInCart._id, product)
                 productsTicket.push(product);
-                await serviceDeleteCartProduct(req.params, productInCart._id);
+                console.log(req.params)
+                console.log(product._id)
+                console.log(await serviceDeleteCartProduct(req.params, product._id))
+                await serviceDeleteCartProduct(req.params.cid, productInCart._id.toString());
             }
         }
-        console.log(productsTicket)
         let ticket
         if (productsTicket.length) {
             ticket = await serviceCreateTicket({
                 code: uuidv4(),
                 purchase_datetime: new Date(),
                 amount: total,
-                purchaser: req.user?.name,
+                purchaser: req.user.name,
             });
         }
-        console.log(ticket)
         res.status(201).send({ status: "success", payload: ticket })
 
     } catch (error) {

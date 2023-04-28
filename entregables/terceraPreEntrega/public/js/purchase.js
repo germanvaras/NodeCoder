@@ -13,10 +13,12 @@ const purchaseProducts = () => {
             fetch(window.location.href + "/purchase", { method: "GET" })
                 .then((res) => res.json())
                 .then((res) => {
+                    console.log(res.payload)
                     if (res.status === "success") {
                         Swal.fire({
                             html: `<p>{res.payload.purchaser} tu total de tu compra es: $${res.payload.amount}</p> <p>Codigo de compra:${res.payload.code}</p> `,
                             icon: res.status,
+                            background: 'var(--black)',
                         });
                     }
                 });
