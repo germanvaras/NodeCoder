@@ -10,8 +10,6 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const initPassport = require("./config/passport");
 const passport = require("passport");
-initPassport();
-app.use(passport.initialize());
 
 const PORT = process.env.PORT || 4200;
 const MONGO_URL = process.env.db

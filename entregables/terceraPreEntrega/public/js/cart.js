@@ -11,7 +11,7 @@ const addProductInCart = async (cid, pid) => {
     },
   }).then((response) => response.json())
   .then((data) => {
-    if (data.status === "Unauthorized") {
+    if (data.status === "error") {
       alerts(data.status, data.payload)
     }
     else {

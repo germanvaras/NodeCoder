@@ -44,7 +44,7 @@ const sendMessages = async () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.status === "Unauthorized") {
+      if (data.status === "error") {
         alerts(data.status, data.payload)
       }
     });

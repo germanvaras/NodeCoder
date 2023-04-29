@@ -1,9 +1,14 @@
 const User = require("../model/user")
 const UserDTO = require("../DTOs/user")
 const createUserDtoFromObject = (obj) => {
-    const {_id, name, lastname, email, age, password, rol, cartId} = obj;
-    let userDto =  new UserDTO(_id, name, lastname, email, age, password, rol, cartId);
-    return userDto
+    if(!obj){
+        return null
+    }
+    else{
+        const {_id, name, lastname, email, age, password, rol, cartId} = obj;
+        let userDto =  new UserDTO(_id, name, lastname, email, age, password, rol, cartId);
+        return userDto
+    } 
 }
 class UserDAO {
     async getUserByEmail(email) {

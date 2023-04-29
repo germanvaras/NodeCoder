@@ -9,7 +9,6 @@ const mapCartToDto = (cart) => {
             thumbnail: product.product.thumbnail,
             quantity: product.quantity
         }
-
     })
     let cartDTO = new CartDTO(products);
     return cartDTO
