@@ -10,6 +10,9 @@ const {
     serviceCreateTicket
 } = require("../services/ticket")
 const { v4: uuidv4 } = require("uuid");
+const noStock = async(req,res) => {
+    
+}
 const purchaseProducts = async (req, res) => {
     try {
         const productsInCart = await serviceGetProductsInCart(req.params.cid);
@@ -18,13 +21,10 @@ const purchaseProducts = async (req, res) => {
         for (const productInCart of productsInCart) {
             const product = await serviceGetProductById(productInCart._id);
             if (productInCart.quantity <= product.stock) {         
-                total += (productInCart.price * productInCart.quantity);
+                total += (product.price * productInCart.quantity);
                 product.stock -= productInCart.quantity; 
-                await serviceUpdateProduct(productInCart._id, product)
+                await serviceUpdateProduct(product._id, product)
                 productsTicket.push(product);
-                console.log(req.params)
-                console.log(product._id)
-                console.log(await serviceDeleteCartProduct(req.params, product._id))
                 await serviceDeleteCartProduct(req.params.cid, productInCart._id.toString());
             }
         }
@@ -34,11 +34,22 @@ const purchaseProducts = async (req, res) => {
                 code: uuidv4(),
                 purchase_datetime: new Date(),
                 amount: total,
-                purchaser: req.user.name,
+                purchaser: req.session?.user?.name,
             });
         }
-        res.status(201).send({ status: "success", payload: ticket })
-
+        if(!productsTicket || productsTicket.length === 0){
+            const productsInCart = await serviceGetProductsInCart(req.params.cid);
+            let noStock 
+            for (const productInCart of productsInCart) {
+                const product = await serviceGetProductById(productInCart._id);
+                if(productInCart.quantity > product.stock){
+                    noStock = product
+                }
+            }
+            res.status(409).send({status: "error", payload: `No hay suficiente stock de ${noStock.title} para completar la compra, el mismo cuenta con ${noStock.stock} de stock`});   
+        }else{
+            res.status(201).send({ status: "success", payload: ticket })
+        }
     } catch (error) {
         res.status(404).send({ status: "error", payload: error.message });
     }
