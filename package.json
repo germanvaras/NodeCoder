@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node entregables/terceraPreEntrega/src/app.js",
-    "debug": "node --inspect entregables/terceraPreEntrega/src/app.js",
-    "dev": "nodemon entregables/terceraPreEntrega/src/app.js"
+    "start": "node entregables/entregable7/src/app.js",
+    "debug": "node --inspect entregables/entregable7/src/app.js",
+    "dev": "nodemon entregables/entregable7/src/app.js"
   },
   "repository": {
     "type": "git",
