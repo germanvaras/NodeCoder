@@ -9,10 +9,8 @@ const {
 const {
     serviceCreateTicket
 } = require("../services/ticket")
+const {sendEmailPurchase} = require('../config/nodemailer')
 const { v4: uuidv4 } = require("uuid");
-const noStock = async(req,res) => {
-    
-}
 const purchaseProducts = async (req, res) => {
     try {
         const productsInCart = await serviceGetProductsInCart(req.params.cid);
@@ -48,6 +46,10 @@ const purchaseProducts = async (req, res) => {
             }
             res.status(409).send({status: "error", payload: `No hay suficiente stock de ${noStock.title} para completar la compra, el mismo cuenta con ${noStock.stock} de stock`});   
         }else{
+            sendEmailPurchase(
+                ticket,
+                req.session?.user
+            )
             res.status(201).send({ status: "success", payload: ticket })
         }
     } catch (error) {

@@ -15,7 +15,7 @@ const purchaseProducts = () => {
                 .then((res) => {
                     if (res.status === "success") {
                         Swal.fire({
-                            html: `<p>${res.payload.purchaser} tu total de tu compra es: $${res.payload.amount}</p> <p>Codigo de compra:${res.payload.code}</p> `,
+                            html: `<p>${res.payload.purchaser.name} tu total de tu compra es: $${res.payload.amount}</p> <p>Codigo de compra:${res.payload.code}</p> `,
                             icon: res.status,
                             confirmButtonText: "Continuar",
                             background: 'var(--black)',

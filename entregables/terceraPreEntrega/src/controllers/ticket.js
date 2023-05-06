@@ -10,9 +10,6 @@ const {
     serviceCreateTicket
 } = require("../services/ticket")
 const { v4: uuidv4 } = require("uuid");
-const noStock = async(req,res) => {
-    
-}
 const purchaseProducts = async (req, res) => {
     try {
         const productsInCart = await serviceGetProductsInCart(req.params.cid);
