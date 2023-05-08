@@ -32,8 +32,12 @@ const purchaseProducts = async (req, res) => {
                 code: uuidv4(),
                 purchase_datetime: new Date(),
                 amount: total,
-                purchaser: req.session?.user,
+                purchaser: req.session?.user?.name,
             });
+            sendEmailPurchase(
+                ticket,
+                req.session?.user
+            )
         }
         if(!productsTicket || productsTicket.length === 0){
             const productsInCart = await serviceGetProductsInCart(req.params.cid);
@@ -46,10 +50,6 @@ const purchaseProducts = async (req, res) => {
             }
             res.status(409).send({status: "error", payload: `No hay suficiente stock de ${noStock.title} para completar la compra, el mismo cuenta con ${noStock.stock} de stock`});   
         }else{
-            sendEmailPurchase(
-                ticket,
-                req.session?.user
-            )
             res.status(201).send({ status: "success", payload: ticket })
         }
     } catch (error) {
