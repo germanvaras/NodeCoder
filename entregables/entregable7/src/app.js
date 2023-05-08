@@ -10,6 +10,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const initPassport = require("./config/passport");
 const passport = require("passport");
+const {getMockProducts} = require("../src/utils/mockingProducts")
 
 const PORT = process.env.PORT || 4200;
 const MONGO_URL = process.env.db
@@ -50,6 +51,9 @@ app.use(passport.initialize());
 app.get("/", (req, res) =>{
     res.redirect("api/products");
 })
+app.get("/mockingproducts", (req, res) => {
+  res.send({ status: "success", payload: getMockProducts()});
+});
 const httpServer = app.listen(PORT, ()=> console.log(`Server listening on port ${httpServer.address().port}`))
 httpServer.on("error", error => console.log(error))
 
