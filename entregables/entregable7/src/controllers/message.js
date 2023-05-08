@@ -10,10 +10,10 @@ const getAllMessages = async (req, res) => {
 };
 const addMessages = async (req, res) => {
     try{     
-        await require("../app").addMessages(req.body);
+        await require("../socket").addMessages(req.body);
         res.send({ status: "success", payload: "Message Added" });
     }catch(error){
-        res.status(500).send({ status: "error", payload: error });
+        res.status(500).send({ status: "error", payload: error.message });
     }
 };
 module.exports = {

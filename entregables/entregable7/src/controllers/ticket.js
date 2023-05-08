@@ -32,7 +32,7 @@ const purchaseProducts = async (req, res) => {
                 code: uuidv4(),
                 purchase_datetime: new Date(),
                 amount: total,
-                purchaser: req.session?.user?.name,
+                purchaser: req.session?.user,
             });
         }
         if(!productsTicket || productsTicket.length === 0){
