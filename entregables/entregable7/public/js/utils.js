@@ -2,11 +2,11 @@ const alerts = (status, errorMessage) => {
     Swal.fire({
         position: 'top-end',
         icon: status,
-        title: errorMessage,
+        text: errorMessage,
         showConfirmButton: false,
         iconColor: 'var(--main-color)',
         background: 'var(--black)',
-        timer: 1500
+        timer: 1500,
     })
 }
 const backHome = () => {

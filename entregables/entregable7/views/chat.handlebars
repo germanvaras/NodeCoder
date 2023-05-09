@@ -3,7 +3,7 @@
     <div id="messages" >
     </div>
     <form id="chatForm" class="chatForm">
-        <input type="text" name="user" id="user" class="formInput" placeholder="Usuario">
+        <input type="text" name="user" id="user" class="formInput" placeholder="{{this.user.username}}" value="{{this.user.username}}" readonly >
         <input type="text" name="message" id="userMessage"  class="formInput" placeholder="Mensaje">
         <button type="submit" class="buttonForm">Enviar</button>
     </form>

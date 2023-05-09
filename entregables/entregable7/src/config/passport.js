@@ -1,8 +1,6 @@
 const passport = require("passport");
 const GitHubStrategy = require("passport-github2");
-require("dotenv").config();
 const {
-    getUserById,
     createUserService,
     getUserByEmail,
 } = require("../services/user");
@@ -31,8 +29,8 @@ const initPassport = () => {
                     if (!user) {
                         let newUser = {
                             name: profile._json.login,
-                            lastname:"/",
-                            age: 18,
+                            lastname:"",
+                            username: profile._json.login,
                             email: profile.emails[0].value,
                             password: "",
                         };

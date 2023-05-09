@@ -17,8 +17,13 @@ const purchaseProducts = () => {
                         Swal.fire({
                             html: `<p>${res.payload.purchaser} tu total de tu compra es: $${res.payload.amount}</p> <p>Codigo de compra:${res.payload.code}</p> `,
                             icon: res.status,
+                            showConfirmButton: true,
                             confirmButtonText: "Continuar",
                             background: 'var(--black)',
+                        }).then(async (result) => {
+                            if(result.isConfirmed){
+                                window.location.reload()
+                            }
                         })
                     }
                     else{

@@ -6,8 +6,8 @@ form.addEventListener("submit", (event) => {
 const submitForm = async () => {
     const name = document.getElementById("userName").value;
     const lastname = document.getElementById("userLastname").value;
+    const username = document.getElementById("username").value;
     const email = document.getElementById("userEmail").value;
-    const age = document.getElementById("userAge").value;
     const password = document.getElementById("userPassword").value;
     await fetch(`${window.location.href}`, {
         method: "post",
@@ -19,8 +19,8 @@ const submitForm = async () => {
         body: JSON.stringify({
             name:name,
             lastname:lastname,
+            username:username,
             email: email,
-            age:age,
             password: password,
         }),
     }).then(async (res) => {

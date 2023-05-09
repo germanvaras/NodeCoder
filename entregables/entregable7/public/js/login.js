@@ -6,6 +6,7 @@ form.addEventListener("submit", (event) => {
 });
 const submitForm = async () => {
     const user = document.getElementById("userEmail").value;
+    const login = user.includes("@") ? { email: user } : { username: user }
     const password = document.getElementById("userPassword").value;
     await fetch(`${window.location.href}`, {
         method: "post",
@@ -14,8 +15,9 @@ const submitForm = async () => {
         headers: {
             "Content-Type": "application/json",
         },
+        
         body: JSON.stringify({
-            email: user,
+            ...login,
             password: password,
         }),
     }).then(async (res) => {
@@ -28,7 +30,4 @@ const submitForm = async () => {
             window.location.replace("/api/products");
         }
     })
-
-
-
 }

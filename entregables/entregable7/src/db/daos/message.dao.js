@@ -15,15 +15,6 @@ class MessageDao {
   async createMessage(message) {
     try {
       const newProduct = new Message(message)
-      const validationError = newProduct.validateSync()
-      if (validationError) {
-        const errorMessages = []
-        for (let errorField in validationError.errors) {
-          const errorMessage = validationError.errors[errorField].message
-          errorMessages.push(errorMessage)
-        }
-        return { error: errorMessages }
-      }
       const createdProduct = await newProduct.save()
       return createdProduct
     } catch (err) {

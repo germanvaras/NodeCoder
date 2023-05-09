@@ -31,16 +31,15 @@ const showMessages = (messages) => {
 };
 
 const sendMessages = async () => {
-  let email = document.getElementById("user");
+  let user = document.getElementById("user");
   let message = document.getElementById("userMessage");
-  console.log(window.location.href);
   await fetch(`${window.location.href}`, {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ user: email.value, message: message.value }),
+    body: JSON.stringify({ user: user.value, message: message.value }),
   })
     .then((response) => response.json())
     .then((data) => {

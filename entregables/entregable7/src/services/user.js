@@ -11,9 +11,13 @@ const getUserByEmail = async (email) => {
     const user = await userRepository.getUserByEmail(email);
     return user;
 }
+const getUserByUsername = async (username) => {
+    const user = await userRepository.getUserByEmail(username);
+    return user;
+}
 const loginUserService = async (user) => {
     const userInDB = await userRepository.findUser(user);
     return userInDB;
 };
 
-module.exports = { createUserService, loginUserService, getUserByEmail }
+module.exports = { createUserService, loginUserService, getUserByEmail, getUserByUsername }

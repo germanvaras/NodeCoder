@@ -69,7 +69,8 @@ h2#swal2-title{
     color:var(--main-color)
 }
 div#swal2-html-container{
-    color:var(--white)
+    color:var(--white);
+    font-size: 2rem;
 }
 .swal2-popup.swal2-modal.swal2-show{
     padding: 1.5rem

@@ -29,14 +29,17 @@ const formRegisterUser = (req, res) => {
 
 const createUser = async (req, res,) => {
     try {
-        let existEmail = await loginUserService(req.body)
-        if(!existEmail.email) {
+        let existEmailOrUser = await loginUserService(req.body)
+        if(!existEmailOrUser.email && !existEmailOrUser.username) {
             await createUserService(req.body);
-            res.status(201)
-            .send({ status: "success", payload: "Usuario creado correctamente" });
+            res.status(201).send({ status: "success", payload: "Usuario creado correctamente" });
+        }
+        else if(existEmailOrUser.username === req.body.username){
+            res.status(403).send({ status: "error", payload:"Usuario Ocupado"})
         }
         else{
-            res.status(403).send({ status: "error", payload:"Usuario Ocupado"})
+            console.log(existEmailOrUser.username)
+            res.status(403).send({ status: "error", payload:"Email Ocupado"})
         }
     } catch (error) {
         console.log(error)

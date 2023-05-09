@@ -10,14 +10,14 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "El campo apellido es requerido"],
     },
+    username: {
+        type: String,
+        required: [true, "El campo username es requerido"],
+    },
     email:{
         type: String,
         unique: [true, "Este mail ya existe"],
         required: [true, "El campo email es requerido"],
-    },
-    age:{
-        type: Number,
-        required: [true, "el campo edad es requerido"]
     },
     password: {type: String},
     rol: {

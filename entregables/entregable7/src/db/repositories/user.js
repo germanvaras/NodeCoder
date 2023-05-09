@@ -9,6 +9,10 @@ const userDAO = new UserDAO()
             const user = await userDAO.getUserByEmail(email);
             return user;
         }
+        getUserByUsername = async (username) => {
+            const user = await userDAO.getUserByUsername(username);
+            return user;
+        }
         findUser = async (user) => {
             const userInDB = await userDAO.findUser(user);
             return userInDB;
