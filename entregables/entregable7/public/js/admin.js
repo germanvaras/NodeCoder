@@ -29,19 +29,42 @@ const submitForm = async () => {
             stock: stock,
             category: category,
             thumbnail: img,
-
         }),
-    });
-    location.reload()
+    }).then((response) => response.json())
+        .then((data) => {
+            if (data.status === "error") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: data.status,
+                    html: `<ul> ${data.payload.map((field) => {
+                        return `<li>${field}</li>`;
+                    }).join('')} </ul>`,
+                    showConfirmButton: false,
+                    iconColor: 'var(--main-color)',
+                    background: 'var(--black)',
+                    timer: 2000,
+                });
+            }
+            else {
+                alerts(data.status, data.payload)
+            }
+        })
 };
 const deleteProduct = async (id) => {
-    await fetch(`${window.location.href}/${id}`, {
+    await fetch(`${window.location.protocol}//${window.location.host}/api/products/form/${id}`, {
         method: "delete",
         mode: "cors",
         cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
         },
-    });
-    location.reload()
+    }).then((response) => response.json())
+        .then((data) => {
+            if (data.status === "error") {
+                alerts(data.status, data.payload)
+            }
+            else {
+                alerts(data.status, data.payload)
+            }
+        })
 }

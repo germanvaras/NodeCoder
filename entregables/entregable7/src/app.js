@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const initPassport = require("./config/passport");
 const passport = require("passport");
 const { getMockProducts } = require("../src/utils/mockingProducts")
+const errorHandler = require("../src/middlewares/errorHandler")
 
 const MONGO_URL = process.env.db
 const secret = process.env.secret
@@ -42,4 +43,5 @@ app.get("/", (req, res) => {
 app.get("/mockingproducts", (req, res) => {
   res.send({ status: "success", payload: getMockProducts() });
 });
+app.use(errorHandler);  
 module.exports = app;

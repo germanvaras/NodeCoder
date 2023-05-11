@@ -7,19 +7,22 @@ const { isValidPassword } = require("../utils/hashPassword");
 const loginUserForm = (req, res) => {
     res.render("login", { title: "Login", style: "index.css" });
 };
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
     try {
         const user = await loginUserService(req.body);
-        const validPassword = isValidPassword(user, req.body.password);
-
-        if (validPassword) {
-            req.session.user = user;
-            res.send({ status: "success", payload: "Login success", cartId: user.cartId});
+        if (!user) {
+            throw new Error("Usuario Inexistente");
         } else {
-            res.status(404).send({ status: "error", payload: "Contraseña Incorrecta" });
+            const validPassword = isValidPassword(user, req.body.password);
+            if (validPassword) {
+                req.session.user = user;
+                res.send({ status: "success", payload: "Login success", cartId: user.cartId });
+            } else {
+                throw new Error("Constraseña Incorrecta");
+            }
         }
     } catch (error) {
-        res.status(404).send({ status: "error", payload: "Usuario Inexistente" });
+        next(error)
     }
 };
 
@@ -30,20 +33,19 @@ const formRegisterUser = (req, res) => {
 const createUser = async (req, res,) => {
     try {
         let existEmailOrUser = await loginUserService(req.body)
-        if(!existEmailOrUser.email && !existEmailOrUser.username) {
+        if (!existEmailOrUser.email && !existEmailOrUser.username) {
             await createUserService(req.body);
             res.status(201).send({ status: "success", payload: "Usuario creado correctamente" });
         }
-        else if(existEmailOrUser.username === req.body.username){
-            res.status(403).send({ status: "error", payload:"Usuario Ocupado"})
+        else if (existEmailOrUser.username === req.body.username) {
+            res.status(403).send({ status: "error", payload: "Usuario Ocupado" })
         }
-        else{
+        else {
             console.log(existEmailOrUser.username)
-            res.status(403).send({ status: "error", payload:"Email Ocupado"})
+            res.status(403).send({ status: "error", payload: "Email Ocupado" })
         }
     } catch (error) {
-        console.log(error)
-        res.status(500).send({ status: "No se pudo crear el usuario" });
+        res.status(500).send({ status: "error", payload: "No se pudo crear el usuario" });
     }
 };
 const logoutUser = (req, res) => {

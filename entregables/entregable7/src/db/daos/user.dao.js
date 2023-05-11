@@ -32,7 +32,6 @@ class UserDAO {
     }
     async findUser(user) {
         let existUser = await User.findOne({$or: [{ username: user.username }, { email: user.email },]});
-        if (!existUser) return { status:"error", payload: "Usuario inexistente" };
         return createUserDtoFromObject(existUser);
     }
 }

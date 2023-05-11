@@ -2,15 +2,14 @@
     <form class="formContainer" id="formProduct">
         <a onclick="backHome()" class="linkForm">Volver al Home</a>
         <h2 class="formTitle">Agregar Producto</h2>
-        <input type="text" placeholder="Título" name="title" class="formInput" id="title" required />
-        <input type="text" placeholder="Descripción" name="description" class="formInput" id="description" required
+        <input type="text" placeholder="Título" name="title" class="formInput" id="title" />
+        <input type="text" placeholder="Descripción" name="description" class="formInput" id="description"
             maxlength="80" />
-        <input type="text" placeholder="Código" name="code" class="formInput" id="code" required maxlength="8" />
-        <input type="text" placeholder="Categoria" name="Category" class="formInput" id="category" required
-            maxlength="20" />
-        <input type="text" placeholder="Url imagem" name="img" class="formInput" id="img" required />
-        <input type="number" placeholder="Precio" name="price" class="formInput" id="price" required />
-        <input type="number" placeholder="Stock" name="stock" class="formInput" id="stock" required />
+        <input type="text" placeholder="Código" name="code" class="formInput" id="code" maxlength="8" />
+        <input type="text" placeholder="Categoria" name="Category" class="formInput" id="category" maxlength="20" />
+        <input type="text" placeholder="Url imagem" name="img" class="formInput" id="img" />
+        <input type="number" placeholder="Precio" name="price" class="formInput" id="price" />
+        <input type="number" placeholder="Stock" name="stock" class="formInput" id="stock" />
         <button class="buttonForm" type="submit">Agregar</button>
     </form>
 </section>
@@ -40,6 +39,23 @@
         </tbody>
         {{/each}}
     </table>
+    <div class="paginationContainer">
+        {{#if hasPrevPage}}
+        <button class="buttonBlack" onclick="prevPage('{{page}}')">Página Anterior
+        </button>
+        {{else}}
+        <button class="buttonDisabled">Página Anterior</button>
+        {{/if}}
+        <h3>{{page}}</h3>
+        {{#if hasNextPage}}
+        <button class="buttonBlack" onclick="nextPage('{{page}}')">
+            Página Siguiente
+        </button>
+        {{else}}
+        <button class="buttonDisabled">Página Siguiente</button>
+        {{/if}}
+    </div>
+    </div>
 </section>
-
 <script src="/js/admin.js"></script>
+<script src="/js/filters.js"></script>

@@ -1,17 +1,17 @@
 const Product = require('../model/product');
 const ProductDTO = require('../DTOs/product')
 const createProductDtoFromObject = (obj) => {
-    const {_id, title, description, code, price, stock, category, thumbnail } = obj;
+    const { _id, title, description, code, price, stock, category, thumbnail } = obj;
     return new ProductDTO(_id, title, description, code, price, stock, category, thumbnail);
 }
 require("dotenv").config;
 class ProductDao {
-    async getProducts({query, limit, page, sort}) {
+    async getProducts({ query, limit, page, sort }) {
         const setLimit = limit ? limit : 10
         const setPage = page ? page : 1
         const setSort = sort ? { price: sort } : {}
-        const setQuery = query ? {category: query } : {}
-        const options ={
+        const setQuery = query ? { category: query } : {}
+        const options = {
             limit: setLimit,
             page: setPage,
             sort: setSort,
@@ -19,7 +19,7 @@ class ProductDao {
         }
         try {
             const products = await Product.paginate(setQuery, options)
-            return {...products, query, sort};
+            return { ...products, query, sort };
         }
         catch (err) {
             return { error: err.message }
@@ -31,8 +31,7 @@ class ProductDao {
             if (!product) {
                 return { error: `No existe un producto con el id: ${id}` }
             }
-        return createProductDtoFromObject (product)
-
+            return createProductDtoFromObject(product)
         }
         catch (err) {
             if (err.name === 'CastError') {
@@ -54,7 +53,7 @@ class ProductDao {
                 return { error: errorMessages }
             }
             const createdProduct = await newProduct.save()
-            return createProductDtoFromObject (createdProduct)
+            return createProductDtoFromObject(createdProduct)
 
         } catch (err) {
             return { error: err.message }
@@ -84,8 +83,7 @@ class ProductDao {
             if (deleteProduct.deletedCount === 0) {
                 return { error: `No existe producto con id:${id}` }
             }
-            const deletedProduct = { Eliminado: `El producto con el id: ${id} ha sido elimnado correctamente` }
-            return createProductDtoFromObject (deletedProduct)
+            return createProductDtoFromObject(deleteProduct)
         }
         catch (err) {
             if (err.name === 'CastError') {
