@@ -38,6 +38,7 @@ const purchaseProducts = async (req, res) => {
                 ticket,
                 req.session?.user
             )
+            req.logger.info(productsTicket)
         }
         if(!productsTicket || productsTicket.length === 0){
             const productsInCart = await serviceGetProductsInCart(req.params.cid);
@@ -53,6 +54,7 @@ const purchaseProducts = async (req, res) => {
             res.status(201).send({ status: "success", payload: ticket })
         }
     } catch (error) {
+        req.logger.error(error.message)
         res.status(404).send({ status: "error", payload: error.message });
     }
 };

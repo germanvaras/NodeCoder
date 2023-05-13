@@ -47,4 +47,4 @@ const addLogger = (req, res, next) => {
     req.logger = logger;
     next()
 }
-module.exports = { addLogger }
+module.exports = { addLogger, logger }

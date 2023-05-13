@@ -42,7 +42,6 @@ app.use(passport.initialize());
 app.use(addLogger)
 app.use("", routes);
 app.get("/", (req, res) => {
-
   res.redirect("api/products");
 })
 app.get("/mockingproducts", (req, res) => {

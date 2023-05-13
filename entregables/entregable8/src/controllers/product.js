@@ -51,6 +51,7 @@ const addProduct = async (req, res, next) => {
     try {
         const productAdded = await serviceAddProduct(req.body)
         if (!productAdded.error) {
+            req.logger.info(req.body)
             res.status(201).send({ status: "success", payload: `Producto: ${req.body.title} agregado ` })
         }
         else {

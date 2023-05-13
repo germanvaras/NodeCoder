@@ -18,7 +18,7 @@ const loginUser = async (req, res, next) => {
                 req.session.user = user;
                 res.send({ status: "success", payload: "Login success", cartId: user.cartId });
             } else {
-                throw new Error("Constraseña Incorrecta");
+                throw new Error("Contraseña Incorrecta");
             }
         }
     } catch (error) {
@@ -35,13 +35,13 @@ const createUser = async (req, res,) => {
         let existEmailOrUser = await loginUserService(req.body)
         if (!existEmailOrUser.email && !existEmailOrUser.username) {
             await createUserService(req.body);
+            req.logger.info(req.body)
             res.status(201).send({ status: "success", payload: "Usuario creado correctamente" });
         }
         else if (existEmailOrUser.username === req.body.username) {
             res.status(403).send({ status: "error", payload: "Usuario Ocupado" })
         }
         else {
-            console.log(existEmailOrUser.username)
             res.status(403).send({ status: "error", payload: "Email Ocupado" })
         }
     } catch (error) {
@@ -55,7 +55,6 @@ const logoutUser = (req, res) => {
         } else res.send({ status: "Logout Error", body: err });
     });
 };
-
 module.exports = {
     loginUserForm,
     loginUser,
