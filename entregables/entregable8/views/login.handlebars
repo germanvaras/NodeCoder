@@ -2,11 +2,13 @@
     <form class="formContainer" id="formLogin">
         <h2 class="formTitle">Ingresá</h2>
         <input type="text" placeholder="Email o Username" name="userEmail" class="formInput" id="userEmail" required />
-        <input type="text" placeholder="Contraseña" name="userPassword" class="formInput" id="userPassword" required
+        <input type="password" placeholder="Contraseña" name="userPassword" class="formInput" id="userPassword" required
             maxlength="20" />
+        <button id="togglePasswordButton" type="button"><i class="fas fa-eye"></i></button>
         <button class="buttonForm" type="submit">Ingresar</button>
         <a class="linkForm" href="auth/github">Iniciar sesión con GitHub </a>
         <p>No tienes una cuenta? <a class="linkForm" href="/api/user/register">Registrate</a></p>
     </form>
 </div>
+<script src="https://kit.fontawesome.com/e8f62e9a4c.js" crossorigin="anonymous"></script>
 <script src="/js/login.js"></script>
