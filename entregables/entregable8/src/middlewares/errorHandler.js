@@ -1,5 +1,3 @@
-const { Console } = require("winston/lib/winston/transports");
-
 const handlerValidationErrors = (err, res) => {
     const bodyError = JSON.parse(err.message);
     return res.status(400).send({ code: 400, ...bodyError });
