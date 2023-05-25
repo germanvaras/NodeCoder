@@ -8,6 +8,7 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/css/{{style}}">
 </head>
+
 <body>
     {{#if user}}
     <nav class="nav">
@@ -15,6 +16,9 @@
             <div class="listMenu">
                 <a class="linkForm" onclick="backHome()">
                     <li>Home</li>
+                </a>
+                <a class="linkForm" onclick="changeRol('{{user._id}}')">
+                    <li>Cambiar Rol</li>
                 </a>
             </div>
             <div class="listCartLogout">
@@ -27,7 +31,6 @@
                         <span class="linkForm" id="cartQuantity"></span>
                     </a>
                 </li>
-
                 <li>
                     <a class="linkForm" href="/api/user/logout">
                         Logout
@@ -44,5 +47,6 @@
     <script src="/js/utils.js"></script>
     {{/if}}
 </body>
- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </html>

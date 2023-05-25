@@ -17,6 +17,23 @@ class UserDAO {
             .lean();
         return createUserDtoFromObject(user);
     }
+    async getUserByUsername(username) {
+        const user = await User
+            .findOne({ username: username })
+            .lean();
+        return createUserDtoFromObject(user);
+    }
+    async getUserById(id) {
+        const user = await User
+        .findOne({ _id: id })
+        .lean()
+        return createUserDtoFromObject(user);
+    }
+    async findUser(user) {
+        let existUser = await User.findOne({ $or: [{ username: user.username }, { email: user.email },] })
+            .lean();
+        return createUserDtoFromObject(existUser);
+    }
     async updatePassword(userId, newPassword) {
         try {
             const updatedUser = await User.findByIdAndUpdate(
@@ -24,22 +41,25 @@ class UserDAO {
                 { password: newPassword },
                 { new: true }
             );
-
             if (!updatedUser) {
                 throw new Error('Usuario Inexistente');
             }
-
             return updatedUser;
         } catch (error) {
             return { error: error.message };
         }
     }
-
-    async getUserByUsername(username) {
-        const user = await User
-            .findOne({ username: username })
-            .lean();
-        return createUserDtoFromObject(user);
+    async updateRol(userId, newRol) {
+        try {
+            const updatedUser = await User.findByIdAndUpdate(
+                userId,
+                { rol: newRol },
+                { new: true }
+            );
+            return updatedUser;
+        } catch (error) {
+            return { error: error.message };
+        }
     }
     async createUser(user, cid) {
         const newUser = await User.create({
@@ -47,11 +67,6 @@ class UserDAO {
             cartId: cid
         });
         return createUserDtoFromObject(newUser);
-    }
-    async findUser(user) {
-        let existUser = await User.findOne({ $or: [{ username: user.username }, { email: user.email },] })
-        .lean();
-        return createUserDtoFromObject(existUser);
     }
 }
 

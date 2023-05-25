@@ -1,6 +1,6 @@
-const rolUser = document.getElementById("admin") ?
-    document.getElementById("admin") :
-    document.getElementById("user")
+const rolUser = document.getElementById("admin") ||
+document.getElementById("premium") ||
+document.getElementById("user");
 const rolUserButton = (text, url) => {
     rolUser.innerText = text
     rolUser.onclick = () => {
@@ -8,7 +8,7 @@ const rolUserButton = (text, url) => {
         window.location.href = newUrl;
     }
 }
-if (rolUser.id === "admin") {
+if (rolUser.id === "admin" || rolUser.id === "premium") {
     rolUserButton("Sección Admin", "products/form")
 }
 else {

@@ -13,3 +13,28 @@ const alerts = (status, errorMessage) => {
 const backHome = () => {
     location.href = `${window.location.protocol}//${window.location.host}/api/products`
 }
+const changeRol = async (id) => {
+    const baseUrl = `${window.location.protocol}//${window.location.host}/api/`;
+    const endpoint = `user/premium/${id}`
+    const url = `${baseUrl}${endpoint}`;
+    await fetch(url, {
+        method: "post",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then((response) => response.json())
+        .then((data) => {
+            if (data.status === "error") {
+                alerts(data.status, data.payload)
+            }
+            else {
+                alerts(data.status, data.payload)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1500);       
+            }
+        })
+
+};

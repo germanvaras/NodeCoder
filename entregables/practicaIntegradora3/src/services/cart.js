@@ -16,7 +16,7 @@ const serviceDeleteProductsInCart = async (id) => {
     let deleteProduct = await cartRepository.deleteProductsInCart(id)
     return deleteProduct;
 }
-const serviceAddCartProduct = async ({ cid, pid })=>{
+const serviceAddCartProduct = async (cid, pid)=>{
     let addCartProduct = await cartRepository.addProductInCart( cid, pid )
     return addCartProduct
 }

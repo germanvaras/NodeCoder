@@ -6,8 +6,7 @@ const {
     serviceDeleteById
 } = require('../services/product.js')
 const { getUserByEmail } = require("../services/user");
-const getProducts = async (req, res) => {
-
+const getProducts = async (req, res, next) => {
     try {
         const products = await serviceGetProducts(req.query);
         let user = await getUserByEmail(req.session?.user?.email);
@@ -29,50 +28,79 @@ const getProducts = async (req, res) => {
             categories,
             user
         });
-
     }
-    catch (err) {
-        res.status(500).send(err.message);
+    catch (error) {
+        next(error)
     }
 }
-const getProductById = async (req, res) => {
-    const id = req.params.pid
-    let product = await serviceGetProductById(id)
-    let user = await getUserByEmail(req.session?.user?.email);
-    res.render("detailProduct",
-        {
-            style: "index.css",
-            title: "Detail",
-            product,
-            user
-        });
+const getProductById = async (req, res, next) => {
+    try{
+        const id = req.params.pid
+        let product = await serviceGetProductById(id)
+        let user = await getUserByEmail(req.session?.user?.email);
+        res.render("detailProduct",
+            {
+                style: "index.css",
+                title: "Detail",
+                product,
+                user
+            });
+    }
+    catch(error){
+        next(error)
+    }
 }
 const addProduct = async (req, res, next) => {
     try {
-        const productAdded = await serviceAddProduct(req.body)
-        if (!productAdded.error) {
-            req.logger.info(req.body)
-            res.status(201).send({ status: "success", payload: `Producto: ${req.body.title} agregado ` })
-        }
-        else {
-            throw new Error(JSON.stringify(productAdded.error))
+        let user = await getUserByEmail(req.session?.user?.email);
+        let owner = req.body.owner === user.email
+        if (user.rol === "premium" || user.rol === "admin") {
+            const productAdded = await serviceAddProduct(req.body)
+            if (!productAdded.error) {
+                req.logger.info(req.body)
+                res.status(201).send({ status: "success", payload: `Producto: ${req.body.title} agregado ` })
+            }    
+            else {
+                throw new Error(JSON.stringify(productAdded.error))
+            }
         }
     }
     catch (error) {
         next(error)
     }
 }
-
-const updateProductById = async (req, res) => {
-    const id = req.params.pid
-    let updateProduct = await serviceUpdateProduct(id, req.body)
-    res.send(updateProduct)
+const updateProductById = async (req, res, next) => {
+    try {
+        const id = req.params.pid
+        let user = await getUserByEmail(req.session?.user?.email);
+        let product = await serviceGetProductById(id)
+        if (user.email === product.owner || user.rol === "admin") {
+            await serviceUpdateProduct(id, req.body)
+            res.status(201).send({ status: "success", payload: `Producto ${product.title} modificado` });
+        }
+        else {
+            throw new Error("No posee la autorización para realizar esta acción");
+        }
+    } catch (error) {
+        next(error)
+    }
 }
-const deleteById = async (req, res) => {
-    const id = req.params.pid
-    let product = await serviceGetProductById(id)
-    await serviceDeleteById(id);
-    res.status(201).send({ status: "success", payload: ` Producto ${product.title} eliminado` });
+const deleteById = async (req, res, next) => {
+    try {
+        const id = req.params.pid
+        let user = await getUserByEmail(req.session?.user?.email);
+        let product = await serviceGetProductById(id)
+        if (user.email === product.owner || user.rol === "admin") {
+            await serviceDeleteById(id);
+            res.status(201).send({ status: "success", payload: `Producto ${product.title} eliminado` });
+        }
+        else {
+            throw new Error("No posee la autorización para realizar esta acción");
+        }
+    } catch (error) {
+        next(error)
+    }
+
 }
 const formCreate = async (req, res) => {
     let user = await getUserByEmail(req.session?.user?.email);

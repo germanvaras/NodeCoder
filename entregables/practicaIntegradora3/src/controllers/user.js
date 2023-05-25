@@ -2,7 +2,9 @@ const {
     createUserService,
     loginUserService,
     updatePasswordService,
-    existUserService
+    existUserService,
+    updateRolService,
+    getUserById,
 } = require("../services/user");
 const {
     findTokenByUserIdService,
@@ -18,7 +20,7 @@ const {
 const {
     generateNumericToken
 } = require("../utils/generateToken");
-const { sendEmailResetPassword } = require("../config/nodemailer")
+const { sendEmailResetPassword } = require("../config/nodemailer");
 
 const loginUserForm = (req, res) => {
     res.render("login", { title: "Login", style: "index.css" });
@@ -60,7 +62,6 @@ const forgotPassword = async (req, res, next) => {
         const timeDifference = expirationDate - currentTime;
         setTimeout(() => {
             deleteTokenByIdService(tokenReset._id)
-            res.redirect(`${req.protocol}://${req.get('host')}/api/user/forgotPassword`);
         }, timeDifference);
         res.status(201).send({ status: "success", payload: `El token de recuperacion ha sido enviado al email: ${user.email}` })
     } catch (error) {
@@ -101,7 +102,6 @@ const resetPassword = async (req, res, next) => {
 const formRegisterUser = (req, res) => {
     res.render("register", { title: "Register", style: "index.css" });
 };
-
 const createUser = async (req, res) => {
     try {
         let existEmailOrUser = await loginUserService(req.body)
@@ -120,6 +120,21 @@ const createUser = async (req, res) => {
         res.status(500).send({ status: "error", payload: error.message });
     }
 };
+const updateRolUser = async (req, res, next) => {
+    try {
+        const user = await getUserById(req.params.uid)
+        let userRol = user.rol
+        if (userRol === "user") {
+            userRol = "premium";
+        } else if (userRol === "premium") {
+            userRol = "user";
+        }
+        await updateRolService(user._id, userRol);
+        res.send({ status: "success", payload: `${user.username} ha cambiado tu rol a ${userRol}` })
+    } catch (error) {
+        next(error)
+    }
+}
 const logoutUser = (req, res) => {
     req.session.destroy((err) => {
         if (!err) {
@@ -136,5 +151,6 @@ module.exports = {
     formForgotPassword,
     formResetPassword,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    updateRolUser,
 };

@@ -15,6 +15,10 @@ const getUserByUsername = async (username) => {
     const user = await userRepository.getUserByEmail(username);
     return user;
 }
+const getUserById = async (id) => {
+    const user = await userRepository.getUserById(id);
+    return user;
+}
 const loginUserService = async (user) => {
     const userInDB = await userRepository.findUser(user);
     return userInDB;
@@ -28,9 +32,13 @@ const existUserService = async (userBody) => {
         return user
     }
 }
-const updatePasswordService = async (userId, newPassword) => {
+const updatePasswordService = async (userId) => {
     const updatedUser = await userRepository.updatePassword(userId, newPassword);
     return updatedUser
 }
+const updateRolService = async (userId, newRol) => {
+    const updatedUser = await userRepository.updateRol(userId, newRol);
+    return updatedUser
+}
 
-module.exports = { createUserService, loginUserService, getUserByEmail, getUserByUsername, updatePasswordService, existUserService }
+module.exports = { createUserService, loginUserService, getUserByEmail, getUserByUsername, updatePasswordService, existUserService, updateRolService, getUserById }

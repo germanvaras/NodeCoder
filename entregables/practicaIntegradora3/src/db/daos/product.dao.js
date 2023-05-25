@@ -1,8 +1,8 @@
 const Product = require('../model/product');
 const ProductDTO = require('../DTOs/product')
 const createProductDtoFromObject = (obj) => {
-    const { _id, title, description, code, price, stock, category, thumbnail } = obj;
-    return new ProductDTO(_id, title, description, code, price, stock, category, thumbnail);
+    const { _id, title, description, code, price, stock, category, thumbnail, owner } = obj;
+    return new ProductDTO(_id, title, description, code, price, stock, category, thumbnail, owner);
 }
 require("dotenv").config;
 class ProductDao {

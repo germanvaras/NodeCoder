@@ -5,10 +5,14 @@ const productSchema = mongoose.Schema({
     description: { type: String, required: [true, "El campo description es requerido"] },
     code: { type: String, required: [true, "El campo code es requerido"] },
     price: { type: Number, required: [true, "El campo price es requerido"] },
-    status: { type: Boolean, default: true},
+    status: { type: Boolean, default: true },
     stock: { type: Number, required: [true, "El campo stock es requerido"] },
     category: { type: String, required: [true, "El campo category es requerido"] },
     thumbnail: { type: String, required: [true, "El campo thambail es requerido"] },
+    owner: {
+        type: String,
+        default: "admin"
+    }
 },
     {
         versionKey: false,

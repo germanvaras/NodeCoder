@@ -1,7 +1,7 @@
 const { getUserByEmail } = require("../services/user");
 const isUser = async (req, res, next) => {
     const user = await getUserByEmail(req.session?.user?.email);
-    if (user?.rol === "user") {
+    if (user?.rol === "user" || user?.rol === "premium") {
         next();
     } else {
         res.status(401).send({

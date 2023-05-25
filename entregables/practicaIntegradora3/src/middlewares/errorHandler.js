@@ -23,20 +23,30 @@ const handlerEmptyFieldsError = (err, res) => {
         code: 422
     });
 };
+const handlerUnauthorized = (err, res) => {
+    res.status(401).send({
+        status: "error",
+        payload: JSON.parse(err.message),
+        code: 401
+    });
+};
 const errorHandler = (err, req, res, next) => {
-    
     try {
         if (err.message == "Contraseña Incorrecta") {
             req.logger.error(err)
             return (err = handlerCredentialError(err, res));
         }
-        if(err.message == "Usuario Inexistente"){
+        if (err.message == "Usuario Inexistente") {
             req.logger.error(err)
             return (err = handlerNotFoundError(err, res));
         }
         if (err.message.includes("requerido")) {
             req.logger.error(err)
             return (err = handlerEmptyFieldsError(err, res));
+        }
+        if (err.message == "No posee la autorización para realizar esta acción") {
+            req.logger.error(err)
+            return (err = handlerUnauthorized(err, res));
         }
         return (err = handlerValidationErrors(err, res));
     } catch (error) {

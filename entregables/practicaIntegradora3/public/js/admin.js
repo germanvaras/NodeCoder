@@ -13,7 +13,8 @@ const submitForm = async () => {
     const price = document.getElementById("price").value;
     const stock = document.getElementById("stock").value;
     const img = document.getElementById("img").value;
-
+    const owner = document.getElementById("owner").value || "admin";
+    
     await fetch(`${window.location.href}`, {
         method: "post",
         mode: "cors",
@@ -29,6 +30,7 @@ const submitForm = async () => {
             stock: stock,
             category: category,
             thumbnail: img,
+            owner: owner
         }),
     }).then((response) => response.json())
         .then((data) => {
@@ -47,6 +49,9 @@ const submitForm = async () => {
             }
             else {
                 alerts(data.status, data.payload)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
             }
         })
 };
@@ -65,6 +70,9 @@ const deleteProduct = async (id) => {
             }
             else {
                 alerts(data.status, data.payload)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
             }
         })
 }

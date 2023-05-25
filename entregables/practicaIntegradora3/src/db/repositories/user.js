@@ -13,6 +13,10 @@ class UserRepository {
         const user = await userDAO.getUserByUsername(username);
         return user;
     }
+    getUserById = async(id) => {
+        const user = await userDAO.getUserById(id);
+        return user;
+    }
     findUser = async (user) => {
         const userInDB = await userDAO.findUser(user);
         return userInDB;
@@ -23,6 +27,15 @@ class UserRepository {
             return updatedUser;
         } catch (error) {
             return { error: error.message };
+        }
+    }
+    async updateRol(userId, newRol){
+        try{
+            const updatedUser = await userDAO.updateRol(userId, newRol);
+            return updatedUser;
+        }
+        catch(error){
+            return{error: error.message}
         }
     }
 }
