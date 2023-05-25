@@ -1,3 +1,4 @@
+const sectionRolUser = document.getElementById("sectionRolButton")
 const rolUser = document.getElementById("admin") ||
 document.getElementById("premium") ||
 document.getElementById("user");
@@ -12,5 +13,5 @@ if (rolUser.id === "admin" || rolUser.id === "premium") {
     rolUserButton("Sección Admin", "products/form")
 }
 else {
-    rolUserButton("Ir al Chat", "chat")
+    sectionRolUser.innerHTML = ""
 }

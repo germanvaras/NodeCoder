@@ -4,8 +4,10 @@
         <h3>Bienvenido: {{user.username}}</h3>
         {{else}}
         {{/if}}
-        <button class="buttonBlack" id="{{user.rol}}">
+        <section id="sectionRolButton">
+            <button class="buttonBlack" id="{{user.rol}}">
         </button>
+        </section>
         <div class="orderPrice">
             <h3>Ordenar por precio</h3>
                 <button class="buttonFilters" onclick="sortAsc('{{sort}}')">

@@ -118,6 +118,24 @@ div#swal2-html-container {
     transform: scale(1.1);
 }
 
+.floating-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--black);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    padding: 1.5rem;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s color;
+    
+}
+.floating-button:hover{
+    color: var(--main-color);
+}
+
 /*home y products */
 .homeContainer {
     display: flex;
@@ -313,9 +331,11 @@ button.swal2-cancel.swal2-styled:hover {
     font-weight: 600;
     transition: background-color .3s;
 }
-.buttonForm{
+
+.buttonForm {
     margin-top: 0;
 }
+
 .buttonDisabled {
     margin-top: 0;
     background-color: #474747;
@@ -522,14 +542,16 @@ th:last-child {
 }
 
 /* login */
-button#togglePasswordButton{
+button#togglePasswordButton {
     background: transparent;
-    border:none;
+    border: none;
     cursor: pointer;
 }
-i.fas.fa-eye{
+
+i.fas.fa-eye {
     color: var(--white);
 }
-i.fas.fa-eye-slash{
+
+i.fas.fa-eye-slash {
     color: var(--main-color);
 }

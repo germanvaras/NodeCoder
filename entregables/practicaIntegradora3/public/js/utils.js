@@ -13,6 +13,9 @@ const alerts = (status, errorMessage) => {
 const backHome = () => {
     location.href = `${window.location.protocol}//${window.location.host}/api/products`
 }
+const goChat = () => {
+    location.href = `${window.location.protocol}//${window.location.host}/api/chat`
+}
 const changeRol = async (id) => {
     const baseUrl = `${window.location.protocol}//${window.location.host}/api/`;
     const endpoint = `user/premium/${id}`

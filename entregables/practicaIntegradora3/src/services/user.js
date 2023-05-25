@@ -32,7 +32,7 @@ const existUserService = async (userBody) => {
         return user
     }
 }
-const updatePasswordService = async (userId) => {
+const updatePasswordService = async (userId, newPassword) => {
     const updatedUser = await userRepository.updatePassword(userId, newPassword);
     return updatedUser
 }

@@ -74,15 +74,15 @@ const formResetPassword = async (req, res) => {
 const resetPassword = async (req, res, next) => {
     try {
         const user = await existUserService(req.body)
-        const password = (req.body.password)
-        const newPassword = (req.body.repeatPassword)
+        const password = req.body.password
+        const newPassword = req.body.repeatPassword
         const tokenReset = await findTokenByUserIdService(user._id);
         const validToken = tokenReset.error ? null : isValidToken(tokenReset, req.body.token)
         if (!validToken) {
             res.status(403).send({ status: "error", payload: "Token Invalido" })
         }
         else {
-            const validPassword = isValidPassword(user, req.body.password);
+            const validPassword = isValidPassword(user, password);
             if (validPassword) {
                 res.status(422).send({ status: "error", payload: "La contraseña no puede ser igual a la anterior" })
             }
@@ -90,8 +90,8 @@ const resetPassword = async (req, res, next) => {
                 res.status(422).send({ status: "error", payload: "Las contraseñas no coinciden" })
             }
             else {
-                deleteTokenByIdService(tokenReset._id)
                 await updatePasswordService(user._id, createHash(password))
+                deleteTokenByIdService(tokenReset._id)
                 res.status(200).send({ status: "success", payload: "Contraseña actualizada correctamente" })
             }
         }
