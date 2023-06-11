@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha entregables/entregable10/src/tests/* --recursive --exit",
     "start": "node index.js",
     "debug": "node --inspect index.js",
     "dev": "nodemon index.js"
@@ -43,5 +43,11 @@
     "sweetalert2": "^11.7.3",
     "uuid": "^9.0.0",
     "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3",
+    "supertest-session": "^4.1.0"
   }
 }
